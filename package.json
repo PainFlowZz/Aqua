@@ -1,0 +1,38 @@
+{
+  "name": "yuki",
+  "version": "2.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "array-sort": "^1.0.0",
+    "cpu-stat": "^2.0.1",
+    "dateformat": "^3.0.3",
+    "discord.js": "^11.4.2",
+    "dotenv-flow": "^0.1.0",
+    "fs": "0.0.1-security",
+    "heroku": "^7.22.9",
+    "moment": "^2.14.1",
+    "moment-duration-format": "^2.2.2",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.4.22",
+    "ms": "^2.1.1",
+    "node-fetch": "^2.3.0",
+    "opusscript": "0.0.6",
+    "os": "^0.1.1",
+    "quick.db": "^7.0.0-b22",
+    "quick.hook": "^1.5.1",
+    "simple-youtube-api": "^5.1.1",
+    "superagent": "^5.0.2",
+    "table": "^5.2.3",
+    "weather-js": "^2.0.0",
+    "ytdl-core": "^0.29.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "resolutions": {
+    "graceful-fs": "4.1.11"
+  }
+}
