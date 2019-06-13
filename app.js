@@ -2,6 +2,15 @@ const fs = require('fs');
 const Discord = require ("discord.js")
 const client = new Discord.Client();
 
+const { join } = require('path');
+this.commands = new Collection();
+
+this.cooldowns = new Collection();
+
+this.queue = new Map();
+
+this.config = config;
+
 require('dotenv-flow').config();
 require('./utils/functions')(client);
 
