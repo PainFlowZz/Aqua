@@ -17,7 +17,7 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
         const duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
         const embedStats = new Discord.RichEmbed()
             .setAuthor("❯ Botinfo Command")
-            .setDescription("Information about the hardware \n For additional information about the bot, just swipe to page 2")
+            .setDescription("Information about the hardware")
             .setThumbnail(bot.user.avatarURL)
             .setColor(colour)
             .addField("❯ Mem Usage", "`" + (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + "MB `", true)
