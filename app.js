@@ -71,62 +71,48 @@ client.on('message', async (msg, play) => {
 
 	if (command === `play`) {
 		const voiceChannel = msg.member.voiceChannel;
+        	
+		if (!voiceChannel) return msg.channel.send('Please join a voice channel to use music command!');
         
-		const YoureNotInAVoiceChannelEmbed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ You're not in a Voice Channel `❌`")
-		
-		if (!voiceChannel) return msg.channel.send(YoureNotInAVoiceChannelEmbed);
+    const permissions = voiceChannel.permissionsFor(msg.client.user);
         
-        const permissions = voiceChannel.permissionsFor(msg.client.user);
-        
-        if (!permissions.has('CONNECT')) {
-
-			return msg.channel.send("❯ I don't have enough permissions to join your voice channel! `❌`");
-        }
+    if (!permissions.has('CONNECT')) {
+		  return msg.channel.send("I don't have enough permissions to join your voice channel!");
+    }
         
 		if (!permissions.has('SPEAK')) {
-
-			return msg.channel.send("❯ I don't have enough permissions to speak in your voice channel! `❌`");
+			return msg.channel.send("I don't have enough permissions to speak in your voice channel!");
 		}
 
 		if (!permissions.has('EMBED_LINKS')) {
-
-			return msg.channel.sendMessage("❯ I don't have enough permissions to insert a URLs! `❌`")
+			return msg.channel.send("I don't have enough permissions to insert a URL!")
 		}
 
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 
 			const playlist = await youtube.getPlaylist(url);
-            const videos = await playlist.getVideos();
+      const videos = await playlist.getVideos();
             
-			for (const video of Object.values(videos)) {
-                
-                const video2 = await youtube.getVideoByID(video.id); 
-                await handleVideo(video2, msg, voiceChannel, true); 
-            }
-			
-			const justaddedtoqueueemebed = new Discord.RichEmbed()
-			.setColor(colour)
-			.setDescription("❯ I added **"+song.title+"** to the queue `✔️`")
-			
-			return msg.channel.send(justaddedtoqueueemebed);
+			for (const video of Object.values(videos)) {      
+        const video2 = await youtube.getVideoByID(video.id); 
+        await handleVideo(video2, msg, voiceChannel, true); 
+      }
+
+			return msg.channel.send(`Successfully added ${song.title} to the queue!`);
 		} else {
 
 			try {
 
-                var video = await youtube.getVideo(url);
+        var video = await youtube.getVideo(url);
                 
 			} catch (error) {
 				try {
 
 					var videos = await youtube.searchVideos(searchString, 5);
 					let index = 0;
-                    const embed1 = new Discord.RichEmbed()
-                    .setTitle("❯ :mag_right:  YouTube Search Results :")
-                    .setDescription(`
-                    ${videos.map(video2 => `${++index}. **${video2.title}**`).join('\n')}`)
-                    
+          const embed1 = new Discord.RichEmbed()
+          .setTitle("❯ :mag_right:  YouTube Search Results :")
+          .setDescription(`${videos.map(video2 => `${++index}. **${video2.title}**`).join('\n')}`)          
 					.setColor(colour)
 					msg.channel.send(embed1).then(message =>{message.delete(20000)})
 								
@@ -137,16 +123,13 @@ client.on('message', async (msg, play) => {
 							time: 15000,
 							errors: ['time']
 						});
-					} catch (err) {
-						
-						let NoNumberEmbed = new Discord.RichEmbed()
-						.setColor(colour)
-						.setDescription("❯ Times Up ⏰")
-						
-						return msg.channel.send(NoNumberEmbed);
-                    }    
-					const videoIndex = parseInt(response.first().content);
-                    var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+          
+          } catch (err) {												
+						return
+          }    
+          
+          const videoIndex = parseInt(response.first().content);
+          var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                     
 				} catch (err) {
 
@@ -159,137 +142,73 @@ client.on('message', async (msg, play) => {
         }
         
 	} else if (command === `skip`) {
-
-		const YoureNotInAVoiceChannelEmbed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ You're not in a Voice Channel `❌`")
+	
+		if (!msg.member.voiceChannel) return msg.channel.send('Please join a voice channel to use music command!');
+				
+		if (!serverQueue) return msg.channel.send('The queue is empty!');
 		
-		if (!msg.member.voiceChannel) return msg.channel.send(YoureNotInAVoiceChannelEmbed);
-		
-		const noqueueemebed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ There is no Queue `❌`")
-		
-		if (!serverQueue) return msg.channel.send(noqueueemebed);
-
-		const Skippedembed = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription("❯ Skipped `✔️`")
-		
-		serverQueue.connection.dispatcher.end(Skippedembed);
-        return undefined;
+		serverQueue.connection.dispatcher.end('Successfully skipped!');
+    return undefined;
         
 	} else if (command === `stop`) {
-		const noquseueemebed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ There is no Queue to stop!`❌`")
-    const noquseueemsebed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ You're not in a Voice Channel `❌`")
-    if (!msg.member.voiceChannel) return msg.channel.send(noquseueemsebed);
-    if (!serverQueue) return msg.channel.send(noquseueemebed);
-        
-		const Stopembed = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription("❯ Stopped `✔️`")
-    
+
+    if (!msg.member.voiceChannel) return msg.channel.send('Please join a voice channel to use music command!');
+    if (!serverQueue) return msg.channel.send('The queue is empty!');
+           
     serverQueue.songs = [];
-		serverQueue.connection.dispatcher.end(Stopembed);
+		serverQueue.connection.dispatcher.end('Successfully stopped!');
 		
-		msg.channel.send(Stopembed)
+		msg.channel.send('Successfully stopped!')
 		return undefined;
         
 	} else if (command === `vol`) {
+			
+		if (!msg.member.voiceChannel) return msg.channel.send('Please join a voice channel to use music command!');
+				
+		if (!serverQueue) return msg.channel.send('You can only use this command when music is playing!');
 		
-		const MissingPermissionEmbed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ Missing permission : `ADMINISTRATOR` `❌`")	
-
-		if(!msg.member.hasPermission("ADMINISTRATOR")) return msg.channel.send(MissingPermissionEmbed)
-		
-		const YoureNotInAVoiceChannelEmbed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ You're not in a Voice Channel `❌`")
-		
-		if (!msg.member.voiceChannel) return msg.channel.send(YoureNotInAVoiceChannelEmbed);
-		
-		const NoMusicPlaying = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ You only can use this command while music is playing `❌`")
-		
-		if (!serverQueue) return msg.channel.send(NoMusicPlaying);
-		
-		const CurrentVolume = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription(`❯ The bot volume is **${serverQueue.volume}**`)
-
-		if (!args[1]) return msg.channel.send(CurrentVolume);
+		if (!args[1]) return msg.channel.send("Current volume: `" + serverQueue.volume + "`");
 		
 		serverQueue.volume = args[1];
     serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 50);
-		
-		const VolumeEmbed = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription(`❯ Volume Now is **${args[1]}** \`✔️\``)
 
-    return msg.channel.send(VolumeEmbed);
+    return msg.channel.send("Successfully set volume to `" + args[1] + "`");
 
 	} else if (command === `np`) {
 
-		const noqueueemebed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ There is no Queue `❌`")
+		if (!serverQueue) return msg.channel.send('The queue is empty!');
 
-		if (!serverQueue) return msg.channel.send(noqueueemebed);
-		const embedNP = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription(`❯ Now playing **${serverQueue.songs[0].title} \`✔️\`**`)
-		
-		return msg.channel.sendEmbed(embedNP);
+		return msg.channel.sendEmbed(`Now playing: ${serverQueue.songs[0].title}!`);
         
 	} else if (command === `queue`) {
-		
-		const noqueueemebed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription("❯ There is no Queue `❌`")
-		
-		if (!serverQueue) return msg.channel.send(noqueueemebed);
+			
+		if (!serverQueue) return msg.channel.send('The queue is empty!');
 		let index = 0;
 
 		const embedqu = new Discord.RichEmbed()
 		.setColor(colour)		
 		.setTitle("❯ The Queue Songs :")
-    .setDescription(`
-        ${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')}
-**Now playing :** **${serverQueue.songs[0].title}**`)
-        .setColor("#f7abab")
+    .setDescription(`${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')}**Now playing :** **${serverQueue.songs[0].title}**`)
+    .setColor("#f7abab")
 		return msg.channel.sendEmbed(embedqu);
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
-			return msg.channel.send('Ok, paused');
+			return msg.channel.send('Successfully paused!');
 		}
-		return msg.channel.send('❯ There is no Queue to Pause `❌`');
+		return msg.channel.send('The queue is empty!');
 	} else if (command === "resume") {
 
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
-			
-			const ResumedEmbed = new Discord.RichEmbed()
-			.setColor(colour)
-			.setDescription("❯ Resumed ▶️")
-			
-			return msg.channel.send(ResumedEmbed);
+						
+			return msg.channel.send('Successfully resumed!');
             
 		}
-		
-		const queueisemptyembed = new Discord.RichEmbed()
-		.setColor(rcolour)
-		.setDescription('❯ Queue is empty! `❌`')
-		
-		return msg.channel.send(queueisemptyembed);
+				
+		return msg.channel.send('The queue is empty!');
 	}
 
 	return undefined;
@@ -323,17 +242,13 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {  // <--
 		} catch (error) {
 
 			queue.delete(msg.guild.id);
-			return msg.channel.send("❯ I can't join your channel:"+error+"` ❌`");
+			return msg.channel.send("I can't join your channel!");
 		}
 	} else {
 		serverQueue.songs.push(song);
 
-		const justaddedtoqueueemebed = new Discord.RichEmbed()
-		.setColor(colour)
-		.setDescription("❯ I added **"+song.title+"** to the queue `✔️`")
-
 		if (playlist) return undefined;
-		else return msg.channel.send(justaddedtoqueueemebed);
+		else return msg.channel.send(`Successfully added ${song.title} to the queue!`);
 	} 
 	return undefined;
 }
@@ -347,10 +262,6 @@ function play(guild, song) {                                      // <-- More Mu
 			return;
 	}
 
-	const songisnowplayingembed = new Discord.RichEmbed()
-	.setColor(colour)
-	.setDescription(`❯ **${song.title}**, is now playing \`✔️\``)
-
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 			.on('end', reason => {
 					if (reason === 'Stream is not generating quickly enough');
@@ -359,7 +270,7 @@ function play(guild, song) {                                      // <-- More Mu
 			})
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-	serverQueue.textChannel.send(songisnowplayingembed);
+	serverQueue.textChannel.send(`Now playing: ${song.title}!`);
 };
 
 client.mongoose.init();
