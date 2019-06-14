@@ -1,39 +1,18 @@
 const Discord = require('discord.js');
 const ms = require("ms");
 const { colour } = require ("../colours.json");
-const { rcolour } = require ("../colours.json");
 
-const NoUserEmbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a `user`! `❌`")
-
-const NoLogChannel = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please create a log channel! `❌`")
-
-const UserAuthorEmbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ You can't mute yourself! `❌`")
-
-const NoTimeEmbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a `time`! `❌`")
-
-const AlreadyMutedEmbed = new Discord.RichEmbed()
-.setColor(colour)
-.setDescription("❯ This user is already muted! `❌`")
 
 exports.run = async (client, message, args, settings) => {
   if(!message.member.hasPermission("MANAGE_MESSAGES")) return
 
   let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
-  if(!user) return message.channel.send(NoUserEmbed)
-  if(user.id === message.author.id) return message.channel.send(UserAuthorEmbed)
+  if(!user) return message.channel.send('Please provide a user!')
+  if(user.id === message.author.id) return message.channel.send("Sorry, you can't mute yourself!")
 
-  if (user.roles.find(x => x.name === "Muted")) return message.channel.send(AlreadyMutedEmbed)
+  if (user.roles.find(x => x.name === "Muted")) return message.channel.send('The target is already muted!')
 
   let log = message.guild.channels.get(settings.loggingChannel)
-  if(!log) return message.channel.send(NoLogChannel)
 
   let reason = args.slice(2).join(" ");
   if(!reason) reason = "No reason given."
@@ -60,36 +39,34 @@ exports.run = async (client, message, args, settings) => {
   }
 
   let mutetime = args[1];
-  if(!mutetime) return message.channel.send(NoTimeEmbed);
+  if(!mutetime) return message.channel.send('Please provide the mutetime!');
 
   await user.addRole(role);
      
-  const LogEmbed = new Discord.RichEmbed()
-  .setAuthor(`${message.author.tag}`, message.author.avatarURL)
+  const embed = new Discord.RichEmbed()
   .setColor(colour)
-  .setDescription(`❯ **Victim:** <@${user.id}> (${user.id}) \n ❯ **Action:** Tempmute \n ❯ **Time:** ${mutetime} \n❯ **Reason:** ${reason}`)
-  .setFooter(message.guild.name, message.guild.iconURL)
+  .setDescription(`❯ **Moderator:** ${message.author} (${message.author.id}) \n ❯ **Target:** ${message.mentions.users.first()} (${user.id}) \n ❯ **Action:** Tempute \n ❯ **Mutetime:** ${mutetime} \n ❯ **Reason:** ${reason}` )
+  .setFooter('Server: ' + message.guild.name, message.guild.iconURL)
   .setTimestamp()
-    
-  log.send(LogEmbed)
   
-  const TempMutedEmbed = new Discord.RichEmbed()
-  .setColor(colour)
-  .setDescription("<@"+user.id +">" + " has been temporarily muted for " + "`"+ mutetime +"`" + " `✔️`")
+  try {
+    log.send(embed)
+  } catch (e) {
+    return 
+  }
   
-  message.channel.send(TempMutedEmbed)
+  message.channel.send(`Successfully muted ${user} for ${mutetime}!`)
 
   setTimeout(function(){
     user.removeRole(role.id);
-    
-    let UnmutedConfirmEmbed = new Discord.RichEmbed()
-    .setColor(colour)
-    .setDescription("<@"+user.id+">" + " has been unmuted!" + " `✔️`")
-    
-    message.channel.send(UnmutedConfirmEmbed);
+     
+    message.channel.send(`Successfully unmuted ${user}!`);
   }, ms(mutetime));
 }
 
-exports.help = {
-  name: "tempmute"
+exports.config = {
+  name: "tempmute",
+  usage: "!tempmute <@user> <mutetime> <reason>",
+  description: "Temporarily mutes a user!",
+  accessableby: "Moderators"
 }

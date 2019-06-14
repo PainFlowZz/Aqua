@@ -6,6 +6,9 @@ exports.run = (client, message, args) => {
 
 };
 
-exports.help = {
-    name: 'say'
-};
+exports.config = {
+    name: "say",
+    usage: "!say <text>",
+    description: "Lets <none> says something!",
+    accessableby: "Everyone"
+}

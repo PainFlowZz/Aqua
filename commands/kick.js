@@ -1,50 +1,39 @@
 const Discord = require('discord.js');
 const { colour } = require ("../colours.json");
-const { rcolour } = require ("../colours.json");
-
-const NoUserEmbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a `user`! `❌`")
-
-const NoLogChannel = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please create a log channel! `❌`")
-
-const UserAuthorEmbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ You can't kick yourself! `❌`")
 
 exports.run = async (client, message, args, settings) => {
   if(!message.member.hasPermission("ADMINISTRATOR")) return
 
   let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
-  if(!user) return message.channel.send(NoUserEmbed)
-  if(user.id === message.author.id) return message.channel.send(UserAuthorEmbed)
+  if(!user) return message.channel.send('Please provide a user!')
+  if(user.id === message.author.id) return message.channel.send(`Sorry, you can't ban yourself!`)
   
-  let log = message.guild.channels.get(settings.loggingChannel)
-  if(!log) return message.channel.send(NoLogChannel)
+  let logs = message.guild.channels.get(settings.loggingChannel)
 
   let reason = args.join(" ").slice(22);
   if(!reason) reason = "No reason given."
 
   message.guild.member(user).kick(reason);
   
-  const KickEmbed = new Discord.RichEmbed()
-  .setColor(colour)
-  .setDescription(`❯ <@${user.id}> has been kicked!` + "`✔️`")
-  message.channel.send(KickEmbed)
+  message.channel.send(`Successfully kicked ${user} from ${message.guild.name}!`)
   
-  const LogEmbed = new Discord.RichEmbed()
-  .setAuthor(`${message.author.tag}`, message.author.avatarURL)
+  const embed = new Discord.RichEmbed()
   .setColor(colour)
-  .setDescription(`❯ **Victim:** <@${user.id}> (${user.id}) \n ❯ **Action:** Kick \n ❯ **Reason:** ${reason}`)
-  .setFooter(message.guild.name, message.guild.iconURL)
+  .setDescription(`❯ **Moderator:** ${message.author} (${message.author.id}) \n ❯ **Target:** ${message.mentions.users.first()} (${user.id}) \n ❯ **Action:** Kick \n ❯ **Reason:** ${reason}` )
+  .setFooter('Server: ' + message.guild.name, message.guild.iconURL)
   .setTimestamp()
   
-  log.send(LogEmbed)
+  try {
+    logs.send(embed)
+  } catch (e) {
+    return 
+  }
 
 }
 
-exports.help = {
-  name: "kick"
+exports.config = {
+  name: "kick",
+  usage: "!kick <@user> <reason>",
+  description: "Kicks a user!",
+  accessableby: "Administrators"
 }

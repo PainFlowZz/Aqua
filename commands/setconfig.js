@@ -2,17 +2,11 @@ const Discord = require("discord.js")
 const { colour } = require ("../colours.json");
 const { rcolour } = require ("../colours.json");
 
-let wcembed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a valid channel! \`❌\`")
+let wcembed = `Please provide a channel!`
 
-let wcemsbed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a role! \`❌\`")
+let wcemsbed = 'Please provide a role!'
 
-let pembed = new Discord.RichEmbed()
-.setColor(rcolour)
-.setDescription("❯ Please specify a prefix! \`❌\`")  
+let pembed = 'Please provide the prefix!'
 
 exports.run = async (client, message, args) => {
 
@@ -116,6 +110,9 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.help = {
-    name: 'setconfig'
+exports.config = {
+    name: "setconfig",
+    usage: "!setconfig <setting>",
+    description: "Sets a setting!",
+    accessableby: "Administrators"
 }

@@ -4,23 +4,17 @@ const { rcolour } = require ("../colours.json");
 
 exports.run = async (client, message, args, settings) => {
 
-    const MissingPermissionEmbed = new Discord.RichEmbed()
-    .setColor(rcolour)
-    .setDescription("❯ Missing permission : `ADMINISTRATOR` `❌`")
-    
-    if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(MissingPermissionEmbed)
+   
+    if (!message.member.hasPermission('ADMINISTRATOR')) return
 
     let setting = args[0];
 
-    const embed = new Discord.RichEmbed()
-    .setColor(colour)
-    .setDescription("❯ The `" + setting + "` of this server has been set to default! `✔️`")
+    const embed = `Successfully defaulted the ${setting}!`
+
 
     switch (setting) {
         case 'prefix': {
                 try {
-                    let log2 = args[1]
-                    if (!log2) return message.channel.send(pembed)
                     await client.updateGuild(message.guild, { prefix: "!" });
                     return message.channel.send(embed);
                 
@@ -82,6 +76,9 @@ exports.run = async (client, message, args, settings) => {
     }
 };
 
-exports.help = {
-    name: 'setconfig'
-};
+exports.config = {
+    name: "reset",
+    usage: "!reset <setting>",
+    description: "Resets a setting!",
+    accessableby: "Administrators"
+}

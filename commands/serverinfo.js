@@ -14,7 +14,7 @@ exports.run = async (bot, msg, message) => {
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
 
     let embed = new Discord.RichEmbed()   
-    .setAuthor("Yuki Serverinfo Command", msg.guild.iconURL)
+    .setAuthor("❯ Serverinfo Command")
     .setColor(colour)
     .setThumbnail(bot.user.avatarURL)
     .addField("❯ Created on", "`" + `${dateFormat(msg.guild.createdAt)}` + "`", true)
@@ -25,7 +25,7 @@ exports.run = async (bot, msg, message) => {
     .addField("❯ Text-channels", "`" + `${msg.guild.channels.filter(m => m.type === 'text').size}` + "`", true)
     .addField("❯ Voice-channels", "`" + `${msg.guild.channels.filter(m => m.type === 'voice').size}` + "`", true)
     .addField("❯ Verification level", "`" + `${verificationLevels[msg.guild.verificationLevel]}` + "`", true)
-    .addField("❯ Roles", "`" + `${msg.guild.roles.size}` + "`", true)
+    .addField("❯ Roles", "`" + `${msg.guild.roles.size -1}` + "`", true)
     .setFooter(`Requested by ${msg.author.tag}`, msg.author.avatarURL)
     .setTimestamp()
     
@@ -33,6 +33,9 @@ exports.run = async (bot, msg, message) => {
 
 };
 
-exports.help = {
-    name: 'serverinfo'
+exports.config = {
+    name: "serverinfo",
+    usage: "!serverinfo",
+    description: "Shows information about the server!",
+    accessableby: "Everyone"
 }

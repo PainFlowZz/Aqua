@@ -20,6 +20,9 @@ exports.run = async (bot, message) => {
 
 }
 
-exports.help = {
-    name: "uptime"
+exports.config = {
+    name: "uptime",
+    usage: "!uptime",
+    description: "Shows the uptime of <none>!",
+    accessableby: "Everyone"
 }

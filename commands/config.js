@@ -28,6 +28,9 @@ module.exports.run = async (client, message, args, settings) => {
     message.channel.send(testaembed);   
 }
 
-module.exports.help = {
-    name : "config"
+exports.config = {
+    name: "config",
+    usage: "!config",
+    description: "Shows the config!",
+    accessableby: "Everyone"
 }

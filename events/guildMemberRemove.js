@@ -13,7 +13,8 @@ module.exports = async (client, member) => {
     if(!userLogs) return
     const embed = new Discord.RichEmbed()
     .setColor("#e74c3c")
-    .setDescription(`❯ **Member:** <@${member.user.id}> \n ❯ **Action:** Member left the Server. Goodbye!`)
+    .setAuthor(`${member.user.tag} (${member.user.id})`, member.user.displayAvatarURL)
+    .setFooter('User left')
     .setTimestamp()
     
     userLogs.send(embed);

@@ -9,16 +9,12 @@ module.exports = async (client, member) => {
         console.error(error);
     }
     
-    if (!member.guild.roles.find(r => r.name === "Male")) return member.guild.createRole({name: "Male", color: "#0000000"});
-
-
-    if (!member.guild.roles.find(r => r.name === "Female")) return member.guild.createRole({name: "Female", color: "#0000000"});
-
     let userLogs = member.guild.channels.get(settings.welcomeChannel);
     if(!userLogs) return
     const embed = new Discord.RichEmbed()
     .setColor("#2ecc71")
-    .setDescription(`❯ **Member:** <@${member.user.id}> \n ❯ **Action:** Member joined the Server. Welcome!`)
+    .setAuthor(`${member.user.tag} (${member.user.id})`, member.user.displayAvatarURL)
+    .setFooter('User joined')
     .setTimestamp()
     
     userLogs.send(embed);
@@ -31,18 +27,5 @@ module.exports = async (client, member) => {
 
     let role = member.guild.roles.get(settings.autoRole);
     member.addRole(role).catch(console.error);
-
-    const newProfile = {
-        guildID: member.guild.id,
-        guildname: member.guild.name,
-        userID: member.id,
-        username: member.user.tag
-    };
-
-    try {
-        await client.createProfile(newProfile);
-    } catch (err) {
-        console.log(err);
-    }
-
+    
 };
