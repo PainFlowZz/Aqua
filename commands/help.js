@@ -28,6 +28,7 @@ module.exports.run = async (bot, message, args, settings) => {
         .addField('❯ Config', '`config` `reset` `setconfig`')
         .addField('❯ Info', '`botinfo` `serverinfo` `weather`')
         .addField('❯ Mod', '`addrole` `ban` `clear` `kick` `mute` `removerole` `tempmute` `unban` `unmute`')
+        .addField('❯ Music', '`np` `pause` `play` `queue` `resume` `skip` `stop` `vol`')
         .addField('❯ Util', '`avatar` `eval` `help` `invites` `ping` `say` `uptime`')
         .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
         .setTimestamp()
