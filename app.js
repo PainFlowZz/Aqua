@@ -172,7 +172,7 @@ client.on('message', async (msg, play) => {
 		serverQueue.volume = args[1];
     serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 50);
 
-    return msg.channel.send("Successfully set volume to `" + args[1] + "`");
+    return msg.channel.send("Successfully set volume to `" + args[1] + "`!");
 
 	} else if (command === `np`) {
 
@@ -188,7 +188,7 @@ client.on('message', async (msg, play) => {
 		const embedqu = new Discord.RichEmbed()
 		.setColor(colour)		
 		.setTitle("❯ The Queue Songs :")
-    .setDescription(`${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')}**Now playing :** **${serverQueue.songs[0].title}**`)
+    .setDescription(`${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')} \n**Now playing :** **${serverQueue.songs[0].title}**`)
     .setColor("#f7abab")
 		return msg.channel.sendEmbed(embedqu);
 	} else if (command === `pause`) {
