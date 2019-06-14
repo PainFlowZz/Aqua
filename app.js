@@ -189,7 +189,7 @@ client.on('message', async (msg, play) => {
 		.setColor(colour)		
 		.setTitle("❯ The Queue Songs :")
     .setDescription(`${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')} \n**Now playing :** **${serverQueue.songs[0].title}**`)
-    .setColor("#f7abab")
+    .setColor(colour)
 		return msg.channel.sendEmbed(embedqu);
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
