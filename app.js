@@ -178,7 +178,7 @@ client.on('message', async (msg, play) => {
 
 		if (!serverQueue) return msg.channel.send('The queue is empty!');
 
-		return msg.channel.sendEmbed(`Now playing: ${serverQueue.songs[0].title}!`);
+		return msg.channel.send(`Now playing: ${serverQueue.songs[0].title}!`);
         
 	} else if (command === `queue`) {
 			
@@ -190,7 +190,7 @@ client.on('message', async (msg, play) => {
 		.setTitle("❯ The Queue Songs :")
     .setDescription(`${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')} \n**Now playing :** **${serverQueue.songs[0].title}**`)
     .setColor(colour)
-		return msg.channel.sendEmbed(embedqu);
+		return msg.channel.send(embedqu);
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
