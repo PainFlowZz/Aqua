@@ -3,7 +3,6 @@ module.exports.run = async (bot, message, args) => {
     
   if (!message.member.hasPermission("MANAGE_MESSAGES")) return
     
-  if(!args[1]) return message.channel.send("Please provide a number!")
   
   if (args > 100) return message.channel.send('Please provide a number between 1 and 100!')
     
