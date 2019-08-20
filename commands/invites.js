@@ -14,10 +14,10 @@ module.exports.run = async (bot, message, args) => {
         possibleinvites.push(`${invites.inviter.username} | ${invites.uses}`)
     })
 
-    if (possibleinvites === null) possibleinvites = none
+    if (possibleinvites === null) possibleinvites = "none"
     const embed = new Discord.RichEmbed()
         .setColor(colour)
-        .addField('❯ Invites', `\`\`\`${possibleinvites.join('\n')}\`\`\``)
+        .addField('➜ Invites', `\`\`\`${possibleinvites.join('\n')}\`\`\``)
         .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
         .setTimestamp()
     message.channel.send(embed);
@@ -27,6 +27,6 @@ module.exports.run = async (bot, message, args) => {
 exports.config = {
     name: "invites",
     usage: "!invites",
-    description: "Sends a invite leadboard!",
+    description: "Displays a invite leadboard!",
     accessableby: "Everyone"
 }
