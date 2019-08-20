@@ -15,7 +15,7 @@ exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
         if (err) {
             return console.log(err);
         }
-        const duration = moment.duration(client.uptime).format("D [days], H [hrs], M [mins], s [secs]");
+        const duration = moment.duration(client.uptime).format(" D [days], H [hrs], M [mins], s [secs]");
         const embedStats = new Discord.RichEmbed()
             .setColor(colour)
             .setAuthor("Aqua | アクア", client.user.avatarURL)
