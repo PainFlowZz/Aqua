@@ -1,5 +1,6 @@
 {
 	"version": "BETA",
 	"library": "discord.js",
-	"website": "none"
+	"website": "none",
+	"developers": "pain#3988"
 	}
