@@ -20,7 +20,7 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
             .setThumbnail(bot.user.avatarURL)
             .setColor(colour)
             .addField("Aqua | アクア", )
-            .addField("Version", "`" + (info.version, true)
+            .addField("Version", "`" + info.version, true)
             .addField("Library", info.library, true)
             .addField("Website", info.website, true)
             .addField("Uptime ", "`" + duration + "`", true)
