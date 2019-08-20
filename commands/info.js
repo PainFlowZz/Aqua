@@ -29,7 +29,7 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
             .addField("CPU usage", "`" + percent.toFixed(2)+ "%`", true)
             .addField("CPU", "`" + os.cpus().map(i => `${i.model}`)[0]+ "`", true)
             .addField("Platform", "`" + os.platform()+ "`", true)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
+            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
             .setTimestamp()
         message.channel.send(embedStats)
     
