@@ -17,9 +17,8 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
         }
         const duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
         const embedStats = new Discord.RichEmbed()
-            .setThumbnail(bot.user.avatarURL)
             .setColor(colour)
-            .addField("Aqua | アクア", bot.user.avatarURL)
+            .addField("Aqua | アクア", client.user.avatarURL)
             .addField("Version", info.version, true)
             .addField("Library", info.library, true)
             .addField("Website", info.website, true)
