@@ -33,10 +33,6 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
             .setTimestamp()
         message.channel.send(embedStats)
     
-        const embedInfo = new Discord.RichEmbed()
-        .setDescription("Test")
-        message.edit(embedInfo)
-    
     });
 };
 
