@@ -27,6 +27,7 @@ exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
             .addField("Users", client.users.size.toLocaleString(), true)
             .addField("CPU usage", percent.toFixed(2)+ "%", true)
             .addField("Developers", info.developers, true)
+            .addBlankField()
             .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
             .setTimestamp()
         message.channel.send(embedStats)
