@@ -9,7 +9,7 @@ let cpuStat = require("cpu-stat")
 const ms = require("ms")
 const info = require("../info.json");
 
-exports.run = (bot, client, message, args) => { // eslint-disable-line no-unused-vars
+exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
 
     cpuStat.usagePercent(function(err, percent, seconds) {
         if (err) {
@@ -23,8 +23,8 @@ exports.run = (bot, client, message, args) => { // eslint-disable-line no-unused
             .addField("Library", info.library, true)
             .addField("Website", info.website, true)
             .addField("Uptime ", "`" + duration + "`", true)
-            .addField("Servers", "`" + bot.guilds.size.toLocaleString() + "`", true)
-            .addField("Users", "`" + bot.users.size.toLocaleString()+ "`", true)
+            .addField("Servers", "`" + client.guilds.size.toLocaleString() + "`", true)
+            .addField("Users", "`" + client.users.size.toLocaleString()+ "`", true)
             .addField("CPU usage", "`" + percent.toFixed(2)+ "%`", true)
             .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
             .setTimestamp()
