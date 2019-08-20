@@ -7,7 +7,7 @@ module.exports.run = async (bot, message, args, settings) => {
 
     const prefix = settings.prefix
 
-    if(args[0] === help) return;
+    if(args[0] === "help") return;
 
     if(args[0]) {
         let command = args[0];
