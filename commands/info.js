@@ -9,7 +9,7 @@ let cpuStat = require("cpu-stat")
 const ms = require("ms")
 const info = require("../info.json");
 
-exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
+exports.run = (bot, client, message, args) => { // eslint-disable-line no-unused-vars
 
     cpuStat.usagePercent(function(err, percent, seconds) {
         if (err) {
