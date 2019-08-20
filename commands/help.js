@@ -1,6 +1,10 @@
 const Discord = require("discord.js")
 const { colour } = require ("../colours.json");
 module.exports.run = async (bot, message, args, settings) => {
+    
+    let emoji = message.guild.emojis.find(x => x.name === "aqua_yeah");
+
+
     const prefix = settings.prefix
 
     if(args[0] == "help") return message.channel.send(`Just do ${prefix}help instead!`)
@@ -22,9 +26,8 @@ module.exports.run = async (bot, message, args, settings) => {
 
     if(!args[0]) {
         const HelpEmbed = new Discord.RichEmbed()
-        .setAuthor("❯ Commands")
         .setColor(colour)
-        .setDescription('A list of all avaiable commands. \n For additional info on a command, type `!help <command>`')
+        .setTitle(emoji + "**Hello! I'm Aqua!**")
         .addField('❯ Config', '`config` `reset` `setconfig`')
         .addField('❯ Info', '`botinfo` `serverinfo` `weather`')
         .addField('❯ Mod', '`addrole` `ban` `clear` `kick` `mute` `removerole` `tempmute` `unban` `unmute`')
