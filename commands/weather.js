@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
     var location = result[0].location;
     const embed = new Discord.RichEmbed()
     .setDescription(`**${current.skytext}**`)
-    .setAuthor(`❯ Weather for ${current.observationpoint}`)
+    .setAuthor(`❯  ${current.observationpoint}`)
     .setThumbnail(current.imageUrl)
     .setColor(colour)
     .addField('❯ Timezone',`UTC${location.timezone}`, true)
@@ -39,6 +39,6 @@ exports.run = async (client, message, args) => {
 exports.config = {
   name: "weather",
   usage: "!weather <location>",
-  description: "Shows the weather!",
+  description: "",
   accessableby: "Everyone"
 }

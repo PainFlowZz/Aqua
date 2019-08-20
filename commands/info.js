@@ -8,6 +8,8 @@ let os = require('os')
 let cpuStat = require("cpu-stat")
 const ms = require("ms")
 
+const info = require("../info.json");
+
 exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
 
     cpuStat.usagePercent(function(err, percent, seconds) {
@@ -16,10 +18,11 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
         }
         const duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
         const embedStats = new Discord.RichEmbed()
-            .setAuthor("❯ Botinfo Command")
+            .setAuthor("Aqua | アクア")
             .setDescription("Information about the hardware")
             .setThumbnail(bot.user.avatarURL)
             .setColor(colour)
+            .addField("Version", "`" + info.version + "`")
             .addField("❯ Mem Usage", "`" + (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + "MB `", true)
             .addField("❯ Uptime ", "`" + duration + "`", true)
             .addField("❯ Users", "`" + bot.users.size.toLocaleString()+ "`", true)
@@ -28,7 +31,7 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
             .addField("❯ CPU usage", "`" + percent.toFixed(2)+ "%`", true)
             .addField("❯ CPU", "`" + os.cpus().map(i => `${i.model}`)[0]+ "`", true)
             .addField("❯ Platform", "`" + os.platform()+ "`", true)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
+            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
             .setTimestamp()
         message.channel.send(embedStats)
     
@@ -41,8 +44,8 @@ exports.run = (bot, message, args) => { // eslint-disable-line no-unused-vars
 
 
 exports.config = {
-    name: "botinfo",
-    usage: "!botinfo",
+    name: "info",
+    usage: "!info",
     description: "Shows information about the bot!",
     accessableby: "Everyone"
 }

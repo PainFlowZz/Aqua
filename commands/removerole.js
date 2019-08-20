@@ -18,7 +18,7 @@ exports.run = async (client, message, args, settings) => {
   if(!role) return message.channel.send('Please provide a role!');
 
   if(!rMember.roles.has(role.id)) return message.channel.send('The target does not have the ' + role + 'role.');
-  await(rMember.removeRole(role.id));
+  await(rMember.roles.remove(role.id));
 
   const embed = new Discord.RichEmbed()
   .setColor(colour)

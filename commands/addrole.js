@@ -6,19 +6,17 @@ exports.run = async (client, message, args, settings) => {
   
   let logs = message.guild.channels.get(settings.loggingChannel);
     
-  let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+  let target = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   let guild = client.guilds.get(message.guild.id)
-  if(!rMember) return message.channel.send('Please provide a user!');
-  
-  USER_ID = rMember;
+  if(!target) return message.channel.send('Error: No user given');
 
-  if (!guild.member(USER_ID)) return message.channel.send('Please provide a valid user!')
+  if (!guild.member(target)) return message.channel.send('Please provide a valid user!')
   
   let role = message.mentions.roles.first()
   if(!role) return message.channel.send('Please provide a role!');
 
-  if(rMember.roles.has(role.id)) return message.channel.send('The target already has the ' + role + 'role.');
-  await(rMember.addRole(role.id));
+  if(target.roles.has(role.id)) return message.channel.send('The target already has the ' + role + 'role.');
+  await(target.roles.add(role.id));
 
   const embed = new Discord.RichEmbed()
   .setColor(colour)
@@ -26,7 +24,7 @@ exports.run = async (client, message, args, settings) => {
   .setFooter('Server: ' + message.guild.name, message.guild.iconURL)
   .setTimestamp()
 
-  message.channel.send(`Successfully added the specified role to ${rMember}!`)
+  message.channel.send(`Successfully added the specified role to ${target}!`)
   
   try {
     logs.send(embed)
