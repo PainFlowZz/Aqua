@@ -26,7 +26,7 @@ exports.run = async (bot, msg, message) => {
     .addField("❯ Voice-channels", "`" + `${msg.guild.channels.filter(m => m.type === 'voice').size}` + "`", true)
     .addField("❯ Verification level", "`" + `${verificationLevels[msg.guild.verificationLevel]}` + "`", true)
     .addField("❯ Roles", "`" + `${msg.guild.roles.size -1}` + "`", true)
-    .setFooter(`Requested by ${msg.author.tag}`, msg.author.avatarURL())
+    .setFooter(`Requested by ${msg.author.tag}`, msg.author.avatarURL)
     .setTimestamp()
     
     msg.channel.send(embed)
