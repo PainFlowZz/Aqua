@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args, settings) => {
         const HelpEmbed = new Discord.RichEmbed()
         .setColor(colour)
         .setTitle(emoji + "**Hello! I'm Aqua!**")
-        .addField('➜ Getting Started', `Please run ${prefix}checklist to view the actions needed to set me up.`)
+        .addField('➜ Getting Started', `Please run ${prefix}checklist to view the actions needed to set me up. You can also use ${prefix}config to view and update the configuration.`)
         .addField('➜ Commands', "If you need help with a command, please run " + prefix +"help `<command>`. If you need a list of all commands, please run " + prefix + "commands.")
         .addField('➜ Issues', "If you run into any issues such as bugs or errors, please join the Support-Server [here](https://discord.gg/kz4tzW).")
         message.channel.send(HelpEmbed)
