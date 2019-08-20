@@ -15,7 +15,7 @@ exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
         if (err) {
             return console.log(err);
         }
-        const duration = moment.duration(client.uptime).format(" D [days] H [hrs] M [mins] s [secs]");
+        const duration = moment.duration(client.uptime).format("D [days], H [hrs], M [mins], s [secs]");
         const embedStats = new Discord.RichEmbed()
             .setColor(colour)
             .setAuthor("Aqua | アクア", client.user.avatarURL)
@@ -25,7 +25,7 @@ exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
             .addField("Uptime ", duration, true)
             .addField("Servers", client.guilds.size.toLocaleString(), true)
             .addField("Users", client.users.size.toLocaleString(), true)
-            .addField("CPU usage", percent.toFixed(2)+ "%", true)
+            .addField("CPU Usage", percent.toFixed(2)+ "%", true)
             .addField("Developers", info.developers, true)
             .addBlankField(true)
         message.channel.send(embedStats)
