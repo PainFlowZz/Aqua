@@ -1,3 +1,5 @@
 {
-	"version": "BETA"
+	"version": "BETA",
+	"library": "discord.js",
+	"website": "none"
 	}
