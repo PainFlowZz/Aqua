@@ -10,9 +10,7 @@ exports.run = async (bot, msg, message) => {
     const days = millis / 1000 / 60 / 60 / 24;
     let emoji = message.guild.emojis.find(x => x.name === "aqua_fingerspin");
     const owner = msg.guild.owner.user || {};
-
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
-
     let embed = new Discord.RichEmbed()   
     .setTitle(emoji + " **Serverinfo!**")
     .setColor(colour)
