@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args, settings) => {
     const dembed = new Discord.RichEmbed()
     .setTitle(emoji + " Configuration!")
     .setColor(colour)
-    .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix | none ]`" + "\n ➜ Current: **"+ settings.prefix)
+    .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix ]`" + "\n ➜ Current: **"+ settings.prefix)
     .addField("__**Welcome Channel**__","**" + settings.prefix + "`config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**" + settings.prefix + "`config leaveChannel [ #channel | none ]`" + "\n ➜ Current: **"+ leaveChannel)
     .addField("__**Log Channel**__","**" + settings.prefix + "`config logChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
@@ -47,7 +47,8 @@ module.exports.run = async (client, message, args, settings) => {
         }
         case 'welcomeChannel': {
             if (updated) {
-                try {
+                try {    
+                    if (updated === "none") return (client.updateGuild(message.guild, { welcomeChannel: "none" }) && (message.channel.send("Successfully set the welcome channel to none")))
                     let channel = message.guild.channels.find(c => c.name === updated) || message.mentions.channels.first();
                     if (!channel) return message.channel.send("Please specify a valid channel.")
                     await client.updateGuild(message.guild, { welcomeChannel: channel.id });
