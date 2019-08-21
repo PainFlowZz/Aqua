@@ -24,6 +24,7 @@ exports.run = async (bot, msg) => {
     .addField("➜ Voice-channels", "`" + `${msg.guild.channels.filter(m => m.type === 'voice').size}` + "`", true)
     .addField("➜ Verification level", "`" + `${verificationLevels[msg.guild.verificationLevel]}` + "`", true)
     .addField("➜ Roles", "`" + `${msg.guild.roles.size -1}` + "`", true)
+    .addBlankField(true)
 
     msg.channel.send(embed)
 
