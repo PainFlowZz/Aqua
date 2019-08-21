@@ -5,10 +5,12 @@ dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
 const { colour } = require ("../colours.json");
 const { rcolour } = require ("../colours.json");
 
-exports.run = async (bot, msg, message) => {
+exports.run = async (bot, msg) => {
     const millis = new Date().getTime() - msg.guild.createdAt.getTime();
     const days = millis / 1000 / 60 / 60 / 24;
-    let emoji = message.guild.emojis.find(x => x.name === "aqua_fingerspin");
+    
+    let emoji = msg.guild.emojis.find(x => x.name === "aqua_fingerspin");
+    
     const owner = msg.guild.owner.user || {};
     const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
     let embed = new Discord.RichEmbed()   
