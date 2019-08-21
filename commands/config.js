@@ -10,10 +10,10 @@ module.exports.run = async (client, message, args, settings) => {
     let loggingChannel = message.guild.channels.get(settings.loggingChannel)
     let autoRole = message.guild.roles.get(settings.autoRole)
 
-    if (welcomeChannel === undefined)  welcomeChannel = "None";
-    if (loggingChannel === undefined)  loggingChannel = "None";
-    if (autoRole === undefined)  autoRole = "None";
-    if (leaveChannel === undefined) leaveChannel = "None";
+    if (welcomeChannel === undefined)  welcomeChannel = "none";
+    if (loggingChannel === undefined)  loggingChannel = "none";
+    if (autoRole === undefined)  autoRole = "none";
+    if (leaveChannel === undefined) leaveChannel = "none";
     
     const dembed = new Discord.RichEmbed()
     .setTitle(emoji + " Configuration!")
@@ -80,9 +80,9 @@ module.exports.run = async (client, message, args, settings) => {
         case 'autoRole': {
             if (updated) {
                 try {
-                    let roj2 = message.mentions.roles.first().id
-                    if (!roj2) return message.channel.send(wcemsbed)
-                    await client.updateGuild(message.guild, { autoRole: roj2 });
+                    let role = message.mentions.roles.first() || message.guild.roles.find(r => r.name === updated)
+                    if (!role) return message.channel.send("Please specify a valid role.")
+                    await client.updateGuild(message.guild, { autoRole: role.id });
                     return message.channel.send(`Successfully set the auto role to ${updated}`);
                 } catch (error) {
                     console.error(error);
