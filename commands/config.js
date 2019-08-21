@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args, settings) => {
     .setTitle(emoji + " Configuration!")
     .setColor(colour)
     .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix | none ]`" + "\n ➜ Current: **"+ settings.prefix)
-    .addField("__**Welcome Channel**__","**" + settings.prefix + "`config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
+    .addField("__**Welcome Channel**__","**" + settings.prefix + "config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**" + settings.prefix + "`config leaveChannel [ #channel | none ]`" + "\n ➜ Current: **"+ leaveChannel)
     .addField("__**Log Channel**__","**" + settings.prefix + "`config logChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
     .addField("__**Role On Join**__","**" + settings.prefix + "`config autoRole [ @role | none ]`" + "\n ➜ Current: **"+ autoRole)
@@ -48,10 +48,9 @@ module.exports.run = async (client, message, args, settings) => {
         case 'welcomeChannel': {
             if (updated) {
                 try {
-                    let channel = message.mentions.channels.first().id
-                    if (!channel) return message.channel.send("Please specify a channel.")
-                    if (!message.mentions.channels.find(c => c.name === updated)) return message.channel.send("Please specify a valid channel.")
-                    await client.updateGuild(message.guild, { welcomeChannel: log2 });
+                    let channel = message.guild.channels.find(c => c.name === updated) || message.mentions.channels.first();
+                    if (!channel) return message.channel.send("Please specify a valid channel.")
+                    await client.updateGuild(message.guild, { welcomeChannel: channel.id });
                     return message.channel.send(`Successfully set the welcome channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
@@ -65,9 +64,9 @@ module.exports.run = async (client, message, args, settings) => {
         case 'loggingChannel': {
             if (updated) {
                 try {
-                    let log2 = message.mentions.channels.first().id
-                    if (!log2) return message.channel.send(wcembed)
-                    await client.updateGuild(message.guild, { loggingChannel: log2 });
+                    let channel = message.guild.channels.find(c => c.name === updated) || message.mentions.channels.first();
+                    if (!channel) return message.channel.send("Please specify a valid channel.")
+                    await client.updateGuild(message.guild, { loggingChannel: channel.id });
                     return message.channel.send(`Successfully set the logging channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
