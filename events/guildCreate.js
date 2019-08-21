@@ -1,6 +1,4 @@
-const Discord = require('discord.js')
-
-module.exports = async (message, client, guild) => {
+module.exports = async (client, guild) => {
 
     const newGuild = {
         guildID: guild.id,

@@ -6,11 +6,11 @@ module.exports = {
     mongoURI: process.env.MONGO_URI,
     defaultSettings: {
         prefix: process.env.PREFIX,
-        welcomeChannel: 'welcome-leave',
-        leaveChannel: 'welcome-leave',
-        modRole: 'Moderator',
-        adminRole: 'Administrator',
-        loggingChannel: 'logs',
-        autoRole: "Member",
+        welcomeChannel: 'undefined',
+        leaveChannel: 'undefined',
+        modRole: 'undefined',
+        adminRole: 'undefined',
+        loggingChannel: 'undefined',
+        autoRole: "undefined",
     }
 };

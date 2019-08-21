@@ -12,7 +12,7 @@ module.exports = {
             family: 4
         };
         
-        mongoose.connect('mongodb+srv://Philip:p8B5LNdu@yuki-qxngj.mongodb.net/test?retryWrites=true', dbOptions);
+        mongoose.connect('mongodb+srv://Philip:p8B5LNdu@yuki-qxngj.mongodb.net/test?retryWrites=true&w=majority', dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
         
