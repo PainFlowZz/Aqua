@@ -16,16 +16,15 @@ module.exports.run = async (client, message, args, settings) => {
     if (leaveChannel === undefined) leaveChannel = "none";
     
     const dembed = new Discord.RichEmbed()
-    .setTitle(emoji + " Configuration!")
+    .setTitle(emoji + " **Configuration!**")
     .setColor(colour)
     .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix ]`" + "\n ➜ Current: **"+ settings.prefix)
     .addField("__**Welcome Channel**__","**" + settings.prefix + "`config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**" + settings.prefix + "`config leaveChannel [ #channel | none ]`" + "\n ➜ Current: **"+ leaveChannel)
-    .addField("__**Log Channel**__","**" + settings.prefix + "`config logChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
+    .addField("__**Log Channel**__","**" + settings.prefix + "`config loggingChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
     .addField("__**Role On Join**__","**" + settings.prefix + "`config autoRole [ @role | none ]`" + "\n ➜ Current: **"+ autoRole)
 
     //message.channel.send(embed);   
-
 
     let setting = args[0];
     let updated = args.slice(1).join(' ');
