@@ -3,7 +3,7 @@ const { colour } = require ("../colours.json");
 
 module.exports.run = async (bot, message, args, settings) => {
     
-    let emoji = message.guild.emojis.find(x => x.name === "minecraft_chest");
+    let emoji = message.guild.emojis.find(x => x.name === "aqua_dance");
 
     const prefix = settings.prefix
 
@@ -11,9 +11,12 @@ module.exports.run = async (bot, message, args, settings) => {
     .setColor(colour)
     .setTitle(emoji + "**Commands!**")
     .setDescription(`If you need help with a command, run ${prefix}help <command>`)
+    .addField(`__**Moderation**__`, "`clear` `ban` `kick` `mute` `tempmute` `unban` `unmute`")
+    .addField(`__**Music**__`, "`np` `pause` `play` `queue` `resume` `skip` `stop` `vol`")
+    .addField(`__**Other**__`, "`avatar` `checklist`")
+    .addField(`__**Utility**__`, "`info` `invites` `serverinfo` `weather`")
 
-    message.channel.send(emoji+ " Take a look at your DMs!")
-    message.author.send(HelpEmbed)
+    message.channel.send(HelpEmbed)
     
 }
 
