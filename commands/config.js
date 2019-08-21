@@ -68,7 +68,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let log2 = message.mentions.channels.first().id
                     if (!log2) return message.channel.send(wcembed)
                     await client.updateGuild(message.guild, { loggingChannel: log2 });
-                    return message.channel.send(`Successfully set the logging channel to ${updated}`;
+                    return message.channel.send(`Successfully set the logging channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
