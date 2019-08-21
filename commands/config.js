@@ -3,7 +3,7 @@ const { colour } = require ("../colours.json");
 const { rcolour } = require ("../colours.json");
 module.exports.run = async (client, message, args, settings) => {
 
-    let emoji = message.guild.emojis.find(x => x.name === "aqua_yeah");
+    let emoji = message.guild.emojis.find(x => x.name === "aqua_why");
 
     let welcomeChannel = message.guild.channels.get(settings.welcomeChannel)
     let leaveChannel = message.guild.channels.get(settings.leaveChannel)
@@ -18,8 +18,8 @@ module.exports.run = async (client, message, args, settings) => {
     const dembed = new Discord.RichEmbed()
     .setTitle(emoji + "Configuration!")
     .setColor(colour)
-    .addField("__**Prefix**__","**➜ Current: **"+ settings.prefix)
-    .addField("__**Welcome Channel**__","**" + settings.prefix + "`config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
+    .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix | none ]`" + "\n ➜ Current: **"+ settings.prefix)
+    .addField("__**Welcome Channel**__","**" + settings.prefix + "config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**" + settings.prefix + "`config leaveChannel [ #channel | none ]`" + "\n ➜ Current: **"+ leaveChannel)
     .addField("__**Log Channel**__","**" + settings.prefix + "`config logChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
     .addField("__**Role On Join**__","**" + settings.prefix + "`config autoRole [ @role | none ]`" + "\n ➜ Current: **"+ autoRole)
