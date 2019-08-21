@@ -1,4 +1,3 @@
 module.exports = {
-    Guild: require('./guild'),
-    Profile: require('./profile')
+    Guild: require('./guild')
 };
