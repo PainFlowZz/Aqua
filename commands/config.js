@@ -13,10 +13,10 @@ module.exports.run = async (client, message, args, settings) => {
     if (autoRole === undefined)  autoRole = "None";
     if (leaveChannel === undefined) leaveChannel = "None";
     
-    const embed = new Discord.RichEmbed()
+    const dembed = new Discord.RichEmbed()
     .setAuthor("Server Config", client.user.avatarURL)
     .setColor(colour)
-    .setDescription("__**Prefix**__: \n`" + settings.prefix + "config prefix [prefix | none]` \n**➜ Current: **" + settings.prefix)
+    .setDescription("__**Prefix**__: \n`" + settings.prefix + "**config prefix [prefix | none]**` \n**➜ Current: **" + settings.prefix)
     //.addField("__**Prefix**__","**➜ Current: **"+ settings.prefix)
     .addField("__**Welcome Channel**__","**➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**➜ Current: **"+ leaveChannel)
@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args, settings) => {
 
     //message.channel.send(embed);   
 
-    
+
     let setting = args[0];
     let updated = args.slice(1).join(' ');
 
@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let log2 = args[1]
                     if (!log2) return message.channel.send(pembed)
                     await client.updateGuild(message.guild, { prefix: updated });
-                    return message.channel.send(embed);
+                    return message.channel.send(`Successfully set the prefix to ${updated}`);
                 
                 } catch (error) {
                     console.error(error);
@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let log2 = message.mentions.channels.first().id
                     if (!log2) return message.channel.send(wcembed)
                     await client.updateGuild(message.guild, { welcomeChannel: log2 });
-                    return message.channel.send(embed);
+                    return message.channel.send(`Successfully set the welcome channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
@@ -68,7 +68,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let log2 = message.mentions.channels.first().id
                     if (!log2) return message.channel.send(wcembed)
                     await client.updateGuild(message.guild, { loggingChannel: log2 });
-                    return message.channel.send(embed);
+                    return message.channel.send(`Successfully set the logging channel to ${updated}`;
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
@@ -83,7 +83,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let roj2 = message.mentions.roles.first().id
                     if (!roj2) return message.channel.send(wcemsbed)
                     await client.updateGuild(message.guild, { autoRole: roj2 });
-                    return message.channel.send(embed);
+                    return message.channel.send(`Successfully set the auto role to ${updated}`);
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
@@ -97,7 +97,7 @@ module.exports.run = async (client, message, args, settings) => {
                     let log2 = message.mentions.channels.first().id
                     if (!log2) return message.channel.send(wcembed)
                     await client.updateGuild(message.guild, { leaveChannel: log2 });
-                    return message.channel.send(embed);
+                    return message.channel.send(`Successfully set the leave channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args, settings) => {
         }
         default: {
             
-            message.channel.send(embed);
+            message.channel.send(dembed);
             break;
         }
     }
