@@ -13,11 +13,12 @@ const e2 = new Discord.RichEmbed()
 
 exports.run = async (client, message, args) => {
   
+  let eemoji = message.guild.emojis.find(x => x.name === "9330_tickred");
   if(!args[0]) return message.channel.send(e1);
   
   weather.find({search: args.join(" "), degreeType: 'C'}, function(err, result) {
     if (err) message.channel.send(err);
-    if (result === undefined || result.length === 0) return message.channel.send(e2);
+    if (result === undefined || result.length === 0) return message.channel.send("Invalid Location " + eemoji);
 
     var current = result[0].current;
     var location = result[0].location;

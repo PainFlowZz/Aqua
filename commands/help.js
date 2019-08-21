@@ -16,9 +16,9 @@ module.exports.run = async (bot, message, args, settings) => {
             
             var embed = new Discord.RichEmbed()
             .setColor(colour)
-            .setDescription("**❯ Command:** " + command.config.name + "\n**❯ Description:** " + command.config.description + "\n**❯ Usage:** " + command.config.usage + "\n**❯ Accessable by:** " + command.config.accessableby)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
-            .setTimestamp()
+            .setTitle("`" + command.config.usage + "`")
+            .addField("➜ Description", command.config.description)
+            .addField("➜ Examples", "`" + command.config.e1 + command.config.e2 + command.config.e3 + "`")
             message.channel.send(embed);
         }
     }
