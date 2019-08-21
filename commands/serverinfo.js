@@ -27,7 +27,6 @@ exports.run = async (bot, msg, message) => {
     .addField("➜ Verification level", "`" + `${verificationLevels[msg.guild.verificationLevel]}` + "`", true)
     .addField("➜ Roles", "`" + `${msg.guild.roles.size -1}` + "`", true)
 
-   
     msg.channel.send(embed)
 
 };
