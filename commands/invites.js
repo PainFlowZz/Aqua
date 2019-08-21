@@ -18,8 +18,6 @@ module.exports.run = async (bot, message, args) => {
     const embed = new Discord.RichEmbed()
         .setColor(colour)
         .addField('➜ Invites', `\`\`\`${possibleinvites.join('\n')}\`\`\``)
-        .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL)
-        .setTimestamp()
     message.channel.send(embed);
 
 }
