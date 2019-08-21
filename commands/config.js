@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, settings) => {
     if (leaveChannel === undefined) leaveChannel = "None";
     
     const dembed = new Discord.RichEmbed()
-    .setTitle(emoji + "Configuration!")
+    .setTitle(emoji + " Configuration!")
     .setColor(colour)
     .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix | none ]`" + "\n ➜ Current: **"+ settings.prefix)
     .addField("__**Welcome Channel**__","**" + settings.prefix + "config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
