@@ -16,8 +16,6 @@ exports.run = async (bot, msg) => {
     let embed = new Discord.RichEmbed()   
     .setTitle(emoji + " **Serverinfo!**")
     .setColor(colour)
-    .setThumbnail(bot.user.avatarURL)
-    .addField("➜ Created on", "`" + `${dateFormat(msg.guild.createdAt)}` + "`", true)
     .addField("➜ Days since creation", "`" + `${days.toFixed(0)}` + "`", true)
     .addField("➜ Region", "`" + `${msg.guild.region}` + "`", true)
     .addField("➜ Member count", "`" + `${msg.guild.members.filter(m => m.presence.status !== 'offline').size} / ${msg.guild.memberCount}` + "`", true)
