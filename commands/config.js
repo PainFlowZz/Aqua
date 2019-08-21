@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args, settings) => {
     .setTitle(emoji + " Configuration!")
     .setColor(colour)
     .addField("__**Prefix**__","**" + settings.prefix + "`config prefix [ prefix | none ]`" + "\n ➜ Current: **"+ settings.prefix)
-    .addField("__**Welcome Channel**__","**" + settings.prefix + "config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
+    .addField("__**Welcome Channel**__","**" + settings.prefix + "`config welchomeChannel [ #channel | none ]`" + "\n ➜ Current: **"+ welcomeChannel)
     .addField("__**Leave Channel**__","**" + settings.prefix + "`config leaveChannel [ #channel | none ]`" + "\n ➜ Current: **"+ leaveChannel)
     .addField("__**Log Channel**__","**" + settings.prefix + "`config logChannel [ #channel | none ]`" + "\n ➜ Current: **"+ loggingChannel)
     .addField("__**Role On Join**__","**" + settings.prefix + "`config autoRole [ @role | none ]`" + "\n ➜ Current: **"+ autoRole)
@@ -34,14 +34,12 @@ module.exports.run = async (client, message, args, settings) => {
         case 'prefix': {
             if (updated) {
                 try {
-                    let log2 = args[1]
-                    if (!log2) return message.channel.send(pembed)
                     await client.updateGuild(message.guild, { prefix: updated });
                     return message.channel.send(`Successfully set the prefix to ${updated}`);
                 
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``);
+                    message.channel.send(`Error: **${error.message}**`);
                 }
             }
 
@@ -50,13 +48,14 @@ module.exports.run = async (client, message, args, settings) => {
         case 'welcomeChannel': {
             if (updated) {
                 try {
-                    let log2 = message.mentions.channels.first().id
-                    if (!log2) return message.channel.send(wcembed)
+                    let channel = message.mentions.channels.first().id
+                    if (!channel) return message.channel.send("Please specify a channel.")
+                    if (!message.mentions.channels.find(c => c.name === updated)) return message.channel.send("Please specify a valid channel.")
                     await client.updateGuild(message.guild, { welcomeChannel: log2 });
                     return message.channel.send(`Successfully set the welcome channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                    message.channel.send(`Error: **${error.message}**`);
                 }
             }
 
@@ -72,7 +71,7 @@ module.exports.run = async (client, message, args, settings) => {
                     return message.channel.send(`Successfully set the logging channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                    message.channel.send(`Error: **${error.message}**`);
                 }
             }
 
@@ -87,7 +86,7 @@ module.exports.run = async (client, message, args, settings) => {
                     return message.channel.send(`Successfully set the auto role to ${updated}`);
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                    message.channel.send(`Error: **${error.message}**`);
                 }
             }
             break;
@@ -101,7 +100,7 @@ module.exports.run = async (client, message, args, settings) => {
                     return message.channel.send(`Successfully set the leave channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                    message.channel.send(`Error: **${error.message}**`);
                 }
             }
             break;
