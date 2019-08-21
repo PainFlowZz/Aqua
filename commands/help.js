@@ -31,7 +31,6 @@ module.exports.run = async (bot, message, args, settings) => {
         .addField('➜ Commands', "If you need help with a command, please run " + prefix +"help `<command>`. If you need a list of all commands, please run " + prefix + "commands.")
         .addField('➜ Issues', "If you run into any issues such as bugs or errors, please join the support server [here](https://discord.gg/kz4tzW).")
         .addField('➜ Suggestions', "If you have any suggestions, direct message my senpai pain.exe#0001. ")
-        .addField('➜ Important Links', "[Ebonics Translator](http://joel.net/EBONICS/translator) ")
 
         message.channel.send(HelpEmbed)
     }

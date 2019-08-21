@@ -3,34 +3,120 @@ const { colour } = require ("../colours.json");
 const { rcolour } = require ("../colours.json");
 module.exports.run = async (client, message, args, settings) => {
 
-    let welcomeChannel1 = message.guild.channels.get(settings.welcomeChannel)
-    let leaveChannel1 = message.guild.channels.get(settings.leaveChannel)
-    let loggingChannel1 = message.guild.channels.get(settings.loggingChannel)
-    let autoRole1 = message.guild.roles.get(settings.autoRole)
+    let welcomeChannel = message.guild.channels.get(settings.welcomeChannel)
+    let leaveChannel = message.guild.channels.get(settings.leaveChannel)
+    let loggingChannel = message.guild.channels.get(settings.loggingChannel)
+    let autoRole = message.guild.roles.get(settings.autoRole)
 
-    if (welcomeChannel1=== undefined)  welcomeChannel1 = "`Not set - please execute " + settings.prefix + "setconfig welcomeChannel <#channel>`";
-    if (loggingChannel1 === undefined)  loggingChannel1 = "`Not set - please execute " + settings.prefix + "setconfig loggingChannel <#channel>`";
-    if (autoRole1 === undefined)  autoRole1 = "`Not set - please execute " + settings.prefix + "setconfig autoRole <@role>`";
-    if (leaveChannel1 === undefined) leaveChannel1 = "`Not set - please execute " + settings.prefix + "setconfig leaveChannel <#channel>`";
-    const testaembed = new Discord.RichEmbed()
-    .setAuthor("Server Config")
+    if (welcomeChannel === undefined)  welcomeChannel = "None";
+    if (loggingChannel === undefined)  loggingChannel = "None";
+    if (autoRole === undefined)  autoRole = "None";
+    if (leaveChannel === undefined) leaveChannel = "None";
+    
+    const embed = new Discord.RichEmbed()
+    .setAuthor("Server Config", client.user.avatarURL)
     .setColor(colour)
-    .setThumbnail(message.guild.iconURL)
-    .addField("❯ Prefix : ", "`"+ settings.prefix + "`" )
-    .addField("❯ Welcome-Channel :", welcomeChannel1)
-    .addField("❯ Leave-Channel :", leaveChannel1)
-    .addField("❯ Logging-Channel :", loggingChannel1)
-    .addField("❯ Auto-Role :", autoRole1)
-    .addField("❯ Avaible Settings : ", "`loggingChannel` `prefix` `autoRole` `welcomeChannel` `leaveChannel`")
-    .setTimestamp()
-    .setFooter("yuki", client.user.avatarURL)
+    .setDescription("__**Prefix**__: \n`" + settings.prefix + "config prefix [prefix | none]` \n**➜ Current: **" + settings.prefix)
+    //.addField("__**Prefix**__","**➜ Current: **"+ settings.prefix)
+    .addField("__**Welcome Channel**__","**➜ Current: **"+ welcomeChannel)
+    .addField("__**Leave Channel**__","**➜ Current: **"+ leaveChannel)
+    .addField("__**Log Channel**__","**➜ Current: **"+ loggingChannel)
+    .addField("__**Role On Join**__", "**➜ Current: **"+ autoRole)
 
-    message.channel.send(testaembed);   
-}
+    //message.channel.send(embed);   
+
+    
+    let setting = args[0];
+    let updated = args.slice(1).join(' ');
+
+    switch (setting) {
+        case 'prefix': {
+            if (updated) {
+                try {
+                    let log2 = args[1]
+                    if (!log2) return message.channel.send(pembed)
+                    await client.updateGuild(message.guild, { prefix: updated });
+                    return message.channel.send(embed);
+                
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``);
+                }
+            }
+
+            break;
+        }
+        case 'welcomeChannel': {
+            if (updated) {
+                try {
+                    let log2 = message.mentions.channels.first().id
+                    if (!log2) return message.channel.send(wcembed)
+                    await client.updateGuild(message.guild, { welcomeChannel: log2 });
+                    return message.channel.send(embed);
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                }
+            }
+
+            break;
+        }
+        
+        case 'loggingChannel': {
+            if (updated) {
+                try {
+                    let log2 = message.mentions.channels.first().id
+                    if (!log2) return message.channel.send(wcembed)
+                    await client.updateGuild(message.guild, { loggingChannel: log2 });
+                    return message.channel.send(embed);
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                }
+            }
+
+            break;
+        }
+        case 'autoRole': {
+            if (updated) {
+                try {
+                    let roj2 = message.mentions.roles.first().id
+                    if (!roj2) return message.channel.send(wcemsbed)
+                    await client.updateGuild(message.guild, { autoRole: roj2 });
+                    return message.channel.send(embed);
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                }
+            }
+            break;
+        }
+        case 'leaveChannel': {
+            if (updated) {
+                try {
+                    let log2 = message.mentions.channels.first().id
+                    if (!log2) return message.channel.send(wcembed)
+                    await client.updateGuild(message.guild, { leaveChannel: log2 });
+                    return message.channel.send(embed);
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`❯ An error occurred: **${error.message}** \`❌\``)
+                }
+            }
+            break;
+        }
+        default: {
+            
+            message.channel.send(embed);
+            break;
+        }
+    }
+
+};
 
 exports.config = {
     name: "config",
     usage: "!config",
     description: "Shows the config!",
     accessableby: "Everyone"
-}
+};
