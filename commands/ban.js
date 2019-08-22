@@ -29,7 +29,7 @@ exports.run = async (client, message, args, settings) => {
     return 
   }
 
-  message.user.send(`You have been banned from ${message.guild.name}!`)
+  client.users.get(user.id).send(`You have been banned from ${message.guild.name}!`);
 
 }
 
