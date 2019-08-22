@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { colour } = require ("../colours.json");
 
-exports.run = async (client, message, args) => {
+exports.run = async (message) => {
     
     let user = message.mentions.users.first() || message.author
 
