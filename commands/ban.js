@@ -10,7 +10,7 @@ exports.run = async (client, message, args, settings) => {
   
   let log = message.guild.channels.get(settings.loggingChannel)
 
-  let reason = args.join(" ").slice(22);
+  let reason = args.join(" --").slice(22);
   if(!reason) reason = "No reason given."
 
   message.guild.member(user).ban(reason);
