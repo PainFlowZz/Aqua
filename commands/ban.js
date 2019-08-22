@@ -2,37 +2,33 @@ const Discord = require('discord.js');
 const { colour } = require ("../colours.json");
 
 exports.run = async (client, message, args, settings) => {
-  if(!message.member.hasPermission("ADMINISTRATOR")) return
-
-  let user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
-  if(!user) return message.channel.send('Please provide a user!')
-  if(user.id == message.author.id) return message.channel.send("Sorry, you can't ban yourself!")
   
-  let log = message.guild.channels.get(settings.loggingChannel)
-
-  let reason = args.join(" ").slice(22);
-  if(!reason) reason = "No reason given."
-
-  message.guild.member(user).ban(reason);
+  if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Sorry, you dont have enough permissions.")
   
-  message.channel.send(`Successfully banned ${user} from ${message.guild.name}!`)
+  user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+  if (!user) return message.channel.send("Please provide a user.")
+  if(user.id === message.author.id) return message.channel.send("Sorry, you can't ban yourself.")
   
-  const embed = new Discord.RichEmbed()
+  let loggingChannel = message.guild.channels.get(settings.loggingChannel)
+
+  let reason = args.join(" ").slice("22")
+  if(!reason) return message.channel.send("Please specify a reason.")
+  
+  let days = args.slice(2).join(" ")
+  if(!days) days = 360
+
+  let modembed = new Discord.RichEmbed()
   .setColor(colour)
-  .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Ban \n ➜ **Reason:** ${reason}` )
-  .setFooter("case#", message.guild.iconURL)
+  .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Days:** ${days} \n➜ **Reason:** ${reason}`)
   .setTimestamp()
   
-  try {
-    log.send(embed)
-  } catch (e) {
-    return 
-  }
+  if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
 
+  message.guild.ban(user, { days: days, reason: reason}).then(() => message.guild.unban(user.id)).catch(err => console.log(err))
 }
 
 exports.config = {
   name: "ban",
-  usage: "!ban <@user> [<reason>]",
+  usage: "!ban <@user> [<reason>] [<days>]",
   description: "Bans a user."
 }
