@@ -13,8 +13,6 @@ exports.run = async (client, message, args, settings) => {
   let reason = args.join(" ").slice(22);
   if(!reason) reason = "No reason given."
 
-  client.users.get(user.id).send(`You have been banned from ${message.guild.name}!`);
-
   message.guild.member(user).ban(reason);
   
   message.channel.send(`Successfully banned ${user} from ${message.guild.name}!`)
