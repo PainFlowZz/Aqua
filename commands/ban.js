@@ -5,7 +5,7 @@ exports.run = async (client, message, args, settings) => {
   
   if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Sorry, you dont have enough permissions.")
   
-  user = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+  user = message.mentions.members.first() || message.guild.members.get(args[0])
   if (!user) return message.channel.send("Please provide a user.")
   if(user.id === message.author.id) return message.channel.send("Sorry, you can't ban yourself.")
   
