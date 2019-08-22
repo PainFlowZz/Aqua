@@ -34,5 +34,5 @@ exports.run = async (client, message, args, settings) => {
 exports.config = {
   name: "ban",
   usage: "!ban <@user> <reason>",
-  description: "Bans a user!"
+  description: "Bans a user."
 }

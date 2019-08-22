@@ -34,3 +34,9 @@ module.exports.run = async (bot, message, args, settings) => {
         message.channel.send(HelpEmbed)
     }
 }
+
+exports.config = {
+    name: "help",
+    usage: "!help [<command-name>]",
+    description: "Displays help."
+}

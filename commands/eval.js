@@ -16,7 +16,6 @@ exports.run = async (client, message, args) => {
 
 exports.config = {
   name: "eval",
-  usage: "!eval <code>",
-  description: "Evals a JavaScript code!",
-  accessableby: "Bot Owner"
+  usage: "!eval",
+  description: "Evals a JavaScript String."
 }

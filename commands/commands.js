@@ -20,8 +20,8 @@ module.exports.run = async (bot, message, args, settings) => {
     
 }
 
-module.exports.help = {
+exports.config = {
     name: "commands",
-    usage: "",
-    description:"",
+    usage: "!commands",
+    description: "Displays all commands."
 }

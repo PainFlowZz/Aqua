@@ -9,6 +9,5 @@ exports.run = (client, message, args) => {
 exports.config = {
     name: "say",
     usage: "!say <text>",
-    description: "Lets <none> says something!",
-    accessableby: "Everyone"
+    description: "Lets Aqua say something."
 }

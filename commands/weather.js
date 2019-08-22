@@ -31,6 +31,5 @@ exports.run = async (client, message, args) => {
 exports.config = {
   name: "weather",
   usage: "!weather <location>",
-  description: "",
-  accessableby: "Everyone"
+  description: "Displays the weather for a specified location."
 }

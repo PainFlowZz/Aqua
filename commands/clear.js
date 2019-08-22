@@ -16,6 +16,5 @@ module.exports.run = async (bot, message, args) => {
 exports.config = {
   name: "clear",
   usage: "!clear <1-100>",
-  description: "Deletes messages!",
-  accessableby: "Moderators"
+  description: "Bulk-deletes messages."
 }

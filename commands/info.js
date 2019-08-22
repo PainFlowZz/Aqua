@@ -36,6 +36,5 @@ exports.run = (client, message, args) => { // eslint-disable-line no-unused-vars
 exports.config = {
     name: "info",
     usage: "!info",
-    description: "Display bot information",
-    accessableby: "Everyone"
+    description: "Display information."
 }

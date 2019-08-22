@@ -25,6 +25,5 @@ module.exports.run = async (bot, message, args) => {
 exports.config = {
     name: "invites",
     usage: "!invites",
-    description: "Displays a invite leadboard!",
-    accessableby: "Everyone"
+    description: "Displays a invite leadboard."
 }

@@ -66,7 +66,6 @@ exports.run = async (client, message, args, settings) => {
 
 exports.config = {
   name: "tempmute",
-  usage: "!tempmute <@user> <mutetime> <reason>",
-  description: "Temporarily mutes a user!",
-  accessableby: "Moderators"
+  usage: "!tempmute <@user> <mutetime> [<reason>]",
+  description: "Mutes a user temporarily."
 }

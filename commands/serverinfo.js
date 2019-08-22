@@ -33,6 +33,5 @@ exports.run = async (bot, msg) => {
 exports.config = {
     name: "serverinfo",
     usage: "!serverinfo",
-    description: "Shows information about the server!",
-    accessableby: "Everyone"
+    description: "Displays information about the server."
 }

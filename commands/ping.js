@@ -10,6 +10,5 @@ exports.run = async (bot, message) => {
 exports.config = {
     name: "ping",
     usage: "!ping",
-    description: "Shows your ping!",
-    accessableby: "Everyone"
+    description: "Displays your ping."
 }

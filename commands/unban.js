@@ -32,7 +32,6 @@ exports.run = async (client, message, args, settings) => {
 
 exports.config = {
   name: "unban",
-  usage: "!unban <user-id> <reason>",
-  description: "Unbans a user!",
-  accessableby: "Administrators"
+  usage: "!unban <user-id> [<reason>]",
+  description: "Unbans a user."
 }

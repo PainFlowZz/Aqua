@@ -38,7 +38,6 @@ exports.run = async (client, message, args, settings) => {
 
 exports.config = {
   name: "unmute",
-  usage: "!unmute <@user> <reason>",
-  description: "Unmutes a user!",
-  accessableby: "Moderators"
+  usage: "!unmute <@user> [<reason>]",
+  description: "Unmutes a user."
 }

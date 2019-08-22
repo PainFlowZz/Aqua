@@ -16,7 +16,6 @@ exports.run = async (client, message, args) => {
 
 exports.config = {
     name: "avatar",
-    usage: "!avatar (optional) <@user>",
-    description: "Shows a avatar!",
-    accessableby: "Everyone"
+    usage: "!avatar [<@user>]",
+    description: "Displays the avatar of a user."
 }

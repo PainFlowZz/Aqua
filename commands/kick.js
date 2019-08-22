@@ -33,7 +33,6 @@ exports.run = async (client, message, args, settings) => {
 
 exports.config = {
   name: "kick",
-  usage: "!kick <@user> <reason>",
-  description: "Kicks a user!",
-  accessableby: "Administrators"
+  usage: "!kick <@user> [<reason>]",
+  description: "Kicks a user."
 }

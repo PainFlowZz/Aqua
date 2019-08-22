@@ -24,6 +24,5 @@ module.exports.run = async (bot, message, args, settings) => {
 exports.config = {
   name: "checklist",
   usage: "!checklist",
-  description: "Displays the checklist",
-  accessableby: "Administrators"
+  description: "Displays the checklist."
 }
