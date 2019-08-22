@@ -19,7 +19,7 @@ exports.run = async (bot, msg) => {
     .addField("Days since creation", `${days.toFixed(0)}`, true)
     .addField("Region", `${msg.guild.region}`, true)
     .addField("Member count", `${msg.guild.members.filter(m => m.presence.status !== 'offline').size} / ${msg.guild.memberCount}`, true)
-    .addField("Owner", `${owner.username || 'None'}` + "`", true)
+    .addField("Owner", `${owner.username || 'None'}`, true)
     .addField("Text-channels", `${msg.guild.channels.filter(m => m.type === 'text').size}`, true)
     .addField("Voice-channels", `${msg.guild.channels.filter(m => m.type === 'voice').size}`, true)
     .addField("Verification level", `${verificationLevels[msg.guild.verificationLevel]}`, true)
