@@ -11,7 +11,7 @@ exports.run = async (client, message, args, settings) => {
   
   let loggingChannel = message.guild.channels.get(settings.loggingChannel)
 
-  let reason = args.join(" ").slice("22")
+  let reason = args[1]
   if(!reason) return message.channel.send("Please specify a reason.")
   
   let days = args.slice(2).join(" ")
