@@ -17,6 +17,10 @@ exports.run = async (client, message, args, settings) => {
   let days = args.slice(2).join(" ")
   if(!days) days = 360
 
+  if(isNaN(days)){
+    return message.channel.send("Please use only numbers as your days argument.")
+  }
+  
   let modembed = new Discord.RichEmbed()
   .setColor(colour)
   .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Days:** ${days} \n➜ **Reason:** ${reason}`)
@@ -29,6 +33,6 @@ exports.run = async (client, message, args, settings) => {
 
 exports.config = {
   name: "ban",
-  usage: "!ban <@user> [<reason>] [<days>]",
+  usage: "!ban <@user> <reason> [<days>]",
   description: "Bans a user."
 }
