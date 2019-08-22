@@ -19,8 +19,8 @@ exports.run = async (client, message, args, settings) => {
   
   const embed = new Discord.RichEmbed()
   .setColor(colour)
-  .setDescription(`❯ **Moderator:** ${message.author} (${message.author.id}) \n ❯ **Target:** ${message.mentions.users.first()} (${user.id}) \n ❯ **Action:** Ban \n ❯ **Reason:** ${reason}` )
-  .setFooter('Server: ' + message.guild.name, message.guild.iconURL)
+  .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Ban \n ➜ **Reason:** ${reason}` )
+  .setFooter("case#", message.guild.iconURL)
   .setTimestamp()
   
   try {
@@ -29,11 +29,12 @@ exports.run = async (client, message, args, settings) => {
     return 
   }
 
+  message.user.send(`You have been banned from ${message.guild.name}!`)
+
 }
 
 exports.config = {
   name: "ban",
-  usage: "!ban <@user> <reason>",
-  description: "Bans a user!",
-  accessableby: "Administrators"
+  usage: `${settings.prefix}` + "ban <@user> <reason>",
+  description: "Bans a user!"
 }

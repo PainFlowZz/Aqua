@@ -18,7 +18,6 @@ module.exports.run = async (bot, message, args, settings) => {
             .setColor(colour)
             .setTitle("`" + command.config.usage + "`")
             .addField("➜ Description", command.config.description)
-            .addField("➜ Examples", "`" + command.config.e1 + command.config.e2 + command.config.e3 + "`")
             message.channel.send(embed);
         }
     }
