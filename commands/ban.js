@@ -28,7 +28,17 @@ exports.run = async (client, message, args, settings) => {
   
   if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
 
-  message.guild.ban(user, { days: days, reason: reason}).then(() => message.guild.unban(user.id)).catch(err => console.log(err))
+  let time = days + "d"
+
+  if (ms(time)) {
+    await message.guild.ban(user, { days: days, reason: reason })
+
+    message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
+  
+  } else {
+    return message.guild.member(user).ban(reason) && message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`);
+  }
+
 }
 
 exports.config = {
