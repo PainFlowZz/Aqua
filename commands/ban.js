@@ -37,7 +37,7 @@ exports.run = async (client, message, args, settings) => {
     message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
   
   } else {
-    return message.guild.member(user).ban(reason) && message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`);
+    return message.guild.ban(user)
   }
 
 }
