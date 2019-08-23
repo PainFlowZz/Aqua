@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args, settings) => {
 
     let setting = args[0];
     let updated = args.slice(1).join(' ');
-
+  
     switch (setting) {
         case 'prefix': {
             if (updated) {
@@ -64,6 +64,7 @@ module.exports.run = async (client, message, args, settings) => {
         case 'loggingChannel': {
             if (updated) {
                 try {
+                    if (updated === "none") return (client.updateGuild(message.guild, { loggingChannel: "none" }) && (message.channel.send("Successfully set the logging channel to none")))
                     let channel = message.guild.channels.find(c => c.name === updated) || message.mentions.channels.first();
                     if (!channel) return message.channel.send("Please specify a valid channel.")
                     await client.updateGuild(message.guild, { loggingChannel: channel.id });
@@ -79,6 +80,7 @@ module.exports.run = async (client, message, args, settings) => {
         case 'autoRole': {
             if (updated) {
                 try {
+                    if (updated === "none") return (client.updateGuild(message.guild, { autoRole: "none" }) && (message.channel.send("Successfully set the role on join to none")))
                     let role = message.mentions.roles.first() || message.guild.roles.find(r => r.name === updated)
                     if (!role) return message.channel.send("Please specify a valid role.")
                     await client.updateGuild(message.guild, { autoRole: role.id });
@@ -93,9 +95,10 @@ module.exports.run = async (client, message, args, settings) => {
         case 'leaveChannel': {
             if (updated) {
                 try {
-                    let log2 = message.mentions.channels.first().id
-                    if (!log2) return message.channel.send(wcembed)
-                    await client.updateGuild(message.guild, { leaveChannel: log2 });
+                    if (updated === "none") return (client.updateGuild(message.guild, { leaveChannel: "none" }) && (message.channel.send("Successfully set the leave channel to none")))
+                    let channel = message.guild.channels.find(c => c.name === updated) || message.mentions.channels.first();
+                    if (!channel) return message.channel.send("Please specify a valid channel.")
+                    await client.updateGuild(message.guild, { leaveChannel: channel.id });
                     return message.channel.send(`Successfully set the leave channel to ${updated}`);
                 } catch (error) {
                     console.error(error);
