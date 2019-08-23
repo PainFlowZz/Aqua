@@ -40,7 +40,7 @@ exports.run = async (client, message, args, settings) => {
     message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
   
   } else {
-    return message.guild.member(user).ban(reason) && message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`) && loggingChannel.send(modembedtype2);
+    return message.guild.member(user).ban(reason).then(message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`)).then(loggingChannel.send(modembedtype2));
   }
 
   if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
