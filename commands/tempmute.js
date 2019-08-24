@@ -48,7 +48,7 @@ exports.run = async (client, message, args, settings) => {
   .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Mute \n ➜ **Reason:** ${reason}` )
    
   if (ms(mutetime)) {
-    await user.addRole(role)w
+    await user.addRole(role)
 
     message.channel.send(`Successfully muted ${user} for ${mutetime}.`);
   
