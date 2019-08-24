@@ -26,7 +26,10 @@ exports.run = async (client, message, args, settings) => {
   .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Days:** ${days} \n➜ **Reason:** ${reason}`)
   .setTimestamp()
   
-  if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
+  let modembedwithoutdays = new Discord.RichEmbed()
+  .setColor(colour)
+  .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Reason:** ${reason}`)
+  .setTimestamp()
 
   let time = days + "d"
 
@@ -35,6 +38,8 @@ exports.run = async (client, message, args, settings) => {
 
     message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
   
+    if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
+
     setTimeout(function () {
 
       message.guild.unban(user.id);
@@ -42,8 +47,12 @@ exports.run = async (client, message, args, settings) => {
       message.channel.send(`Successfully unbanned ${user} from ${message.guild.name}.`)
     }, ms(time));
 
-  } else {
-    return message.guild.ban(user).then(message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`))
+  } else{
+    message.guild.ban(user)
+    
+    message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`)
+    
+    loggingChannel.send(modembedwithoutdays)
   }
 
 }
