@@ -59,7 +59,7 @@ exports.run = async (client, message, args, settings) => {
       user.removeRole(role)
       
       message.channel.send(`Successfully unmuted ${user}.`)
-    }, ms(time));
+    }, ms(mutetime));
 
   } else{
     user.addRole(role)
