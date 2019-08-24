@@ -47,10 +47,8 @@ exports.run = async (client, message, args, settings) => {
   .setColor(colour)
   .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Mute \n ➜ **Reason:** ${reason}` )
    
-  message.channel.send(`Successfully muted ${user} for ${mutetime}!`)
-
   if (ms(mutetime)) {
-    await user.addRole(role)
+    await user.addRole(role)w
 
     message.channel.send(`Successfully muted ${user} for ${mutetime}.`);
   
