@@ -16,7 +16,6 @@ exports.run = async (client, message, args, settings) => {
   if(!reason) return message.channel.send("Please specify a reason.")
   
   let days = args.slice(2).join(" ")
-  if(!days) days = 360
 
   if(isNaN(days)){
     return message.channel.send("Please use only numbers as your days argument.")
