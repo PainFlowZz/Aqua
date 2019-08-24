@@ -61,18 +61,14 @@ exports.run = async (client, message, args, settings) => {
       message.channel.send(`Successfully unmuted ${user}.`)
     }, ms(mutetime));
 
-  } else{
-    user.addRole(role)
-    
-    message.channel.send(`Successfully muted ${user}.`)
-    
-    loggingChannel.send(embedwithouttime)
+  } else {
+    return message.channel.send("Please specify a mutetime.")
   }
-
+  
 }
 
 exports.config = {
   name: "mute",
-  usage: "!mute <@user> <reason> [<mutetime>]",
+  usage: "!mute <@user> <reason> <mutetime>",
   description: "Mutes a user."
 }
