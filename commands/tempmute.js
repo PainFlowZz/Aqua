@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const ms = require("ms");
 const { colour } = require ("../colours.json");
 
-
 exports.run = async (client, message, args, settings) => {
   if(!message.member.hasPermission("MANAGE_MESSAGES")) return
 
@@ -12,10 +11,9 @@ exports.run = async (client, message, args, settings) => {
 
   if (user.roles.find(x => x.name === "Muted")) return message.channel.send('The target is already muted!')
 
-  let log = message.guild.channels.get(settings.loggingChannel)
+  let loggingChannel = message.guild.channels.get(settings.loggingChannel)
 
-  let reason = args.slice(2).join(" ");
-  if(!reason) reason = "No reason given."
+  let mutetime = args.slice(2).join(" ");
 
   let role = message.guild.roles.find(r => r.name === "Muted");
   if(!role) {
@@ -38,34 +36,45 @@ exports.run = async (client, message, args, settings) => {
       }
   }
 
-  let mutetime = args[1];
-  if(!mutetime) return message.channel.send('Please provide the mutetime!');
-
-  await user.addRole(role);
-     
+  let reason = args[1];
+  if(!reason) return message.channel.send('Please specify a reason.');
+   
   const embed = new Discord.RichEmbed()
   .setColor(colour)
-  .setDescription(`❯ **Moderator:** ${message.author} (${message.author.id}) \n ❯ **Target:** ${message.mentions.users.first()} (${user.id}) \n ❯ **Action:** Tempute \n ❯ **Mutetime:** ${mutetime} \n ❯ **Reason:** ${reason}` )
-  .setFooter('Server: ' + message.guild.name, message.guild.iconURL)
-  .setTimestamp()
-  
-  try {
-    log.send(embed)
-  } catch (e) {
-    return 
-  }
-  
+  .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Tempute \n ➜ **Mutetime:** ${mutetime} \n ➜ **Reason:** ${reason}` )
+   
+  const embedwithouttime = new Discord.RichEmbed()
+  .setColor(colour)
+  .setDescription(`➜ **Moderator:** ${message.author} (${message.author.id}) \n ➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n ➜ **Action:** Mute \n ➜ **Reason:** ${reason}` )
+   
   message.channel.send(`Successfully muted ${user} for ${mutetime}!`)
 
-  setTimeout(function(){
-    user.removeRole(role.id);
-     
-    message.channel.send(`Successfully unmuted ${user}!`);
-  }, ms(mutetime));
+  if (ms(mutetime)) {
+    await user.roles.add(role)
+
+    message.channel.send(`Successfully muted ${user} for ${mutetime}.`);
+  
+    if(settings.loggingChannel !== "none") loggingChannel.send(embed)
+
+    setTimeout(function () {
+
+      user.roles.remove(role)
+      
+      message.channel.send(`Successfully unmuted ${user}.`)
+    }, ms(time));
+
+  } else{
+    user.roles.add(role)
+    
+    message.channel.send(`Successfully muted ${user}.`)
+    
+    loggingChannel.send(embedwithouttime)
+  }
+
 }
 
 exports.config = {
-  name: "tempmute",
-  usage: "!tempmute <@user> <mutetime> [<reason>]",
-  description: "Mutes a user temporarily."
+  name: "mute",
+  usage: "!mute <@user> <reason> [<mutetime>]",
+  description: "Mutes a user."
 }

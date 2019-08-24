@@ -24,19 +24,17 @@ exports.run = async (client, message, args, settings) => {
   let modembed = new Discord.RichEmbed()
   .setColor(colour)
   .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Days:** ${days} \n➜ **Reason:** ${reason}`)
-  .setTimestamp()
-  
+ 
   let modembedwithoutdays = new Discord.RichEmbed()
   .setColor(colour)
   .setDescription(`➜ **Action:** Ban \n➜ **Target:** ${message.mentions.users.first()} (${user.id}) \n➜ **Moderator:** ${message.author} (${message.author.id}) \n➜ **Reason:** ${reason}`)
-  .setTimestamp()
 
   let time = days + "d"
 
   if (ms(time)) {
     await message.guild.ban(user, { days: days, reason: reason })
 
-    message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
+    message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days} days.`);
   
     if(settings.loggingChannel !== "none") loggingChannel.send(modembed)
 
