@@ -13,7 +13,7 @@ exports.run = async (client, message, args, settings) => {
 
   let loggingChannel = message.guild.channels.get(settings.loggingChannel)
 
-  let mutetime = args.slice(2).join(" ");
+  let mutetime = args.slice(2).join(" ")
 
   let role = message.guild.roles.find(r => r.name === "Muted");
   if(!role) {
@@ -36,7 +36,7 @@ exports.run = async (client, message, args, settings) => {
       }
   }
 
-  let reason = args[1];
+  let reason = args[1]
   if(!reason) return message.channel.send('Please specify a reason.');
    
   const embed = new Discord.RichEmbed()
@@ -50,7 +50,7 @@ exports.run = async (client, message, args, settings) => {
   message.channel.send(`Successfully muted ${user} for ${mutetime}!`)
 
   if (ms(mutetime)) {
-    await user.roles.add(role)
+    await user.addRole(role)
 
     message.channel.send(`Successfully muted ${user} for ${mutetime}.`);
   
@@ -58,13 +58,13 @@ exports.run = async (client, message, args, settings) => {
 
     setTimeout(function () {
 
-      user.roles.remove(role)
+      user.removeRole(role)
       
       message.channel.send(`Successfully unmuted ${user}.`)
     }, ms(time));
 
   } else{
-    user.roles.add(role)
+    user.addRole(role)
     
     message.channel.send(`Successfully muted ${user}.`)
     
