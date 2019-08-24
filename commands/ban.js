@@ -36,8 +36,15 @@ exports.run = async (client, message, args, settings) => {
 
     message.channel.send(`Successfully banned ${user} from ${message.guild.name} for ${days}days.`);
   
+    setTimeout(function () {
+
+      message.guild.unban(user.id);
+      
+      message.channel.send(`Successfully unbanned ${user} from ${message.guild.name}.`)
+    }, ms(time));
+
   } else {
-    return message.guild.ban(user)
+    return message.guild.ban(user).then(message.channel.send(`Successfully banned ${user} from ${message.guild.name}.`))
   }
 
 }
