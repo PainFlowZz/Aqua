@@ -23,11 +23,17 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-const commandFiles = readdirSync(join("./commands/")).filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-	const command = require(join("./commands/", `${file}`));
-	client.commands.set(command.name, command);
-}
+fs.readdir('./commands/', async (err, files) => {
+	if (err) return console.error;
+	console.log(`Loaded all Commands!`)
+	  
+	files.forEach(file => {
+		if (!file.endsWith('.js')) return;
+		let props = require(`./commands/${file}`);
+		let cmdName = file.split('.')[0];
+		client.commands.set(cmdName, props);
+	});
+});
 
 client.mongoose.init();
 client.login(process.env.CLIENT_TOKEN);
