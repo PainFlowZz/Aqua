@@ -21,8 +21,7 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-
-client.on('message', message => {
+client.on('message', async (message) => {
 	
 	let settings;
 	try {
