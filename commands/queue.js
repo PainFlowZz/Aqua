@@ -1,23 +1,12 @@
-exports.run = async (bot, message, args, ops) => {
+exports.run = async (message) => {
  
-    var guildIDData = ops.active.get(message.guild.id);
- 
-    if (!guildIDData) return message.channel.send("There is no playing song.")
- 
-    var queue = guildIDData.queue;
-    
-    var nowPlaying = queue[0];
- 
-    var response = `Now playing: ${nowPlaying.songTitle} || requested by ${nowPlaying.requester}\n\nQueue: \n`;
- 
-    for (var i = 0; i < queue.length; i++) {
- 
-        response += `${i}, ${queue[i].songTitle} requested by ${queue[i].requester}\n`;
- 
-    }
-   
-    message.channel.send(response);
- 
+    const serverQueue = message.client.queue.get(message.guild.id);
+    if (!serverQueue) return message.channel.send('There is nothing playing.');
+    return message.channel.send(`
+__**Song queue:**__
+${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
+**Now playing:** ${serverQueue.songs[0].title}
+    `);
 }
  
 exports.help = {

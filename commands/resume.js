@@ -1,16 +1,11 @@
-exports.run = async (client, message, args, ops) => {
-    
-    var guildIDData = ops.active.get(message.guild.id);
-
-    if (!guildIDData) return message.channel.send("There is no playing song.")
-
-    if (message.guild.me.voiceChannel !== message.member.voiceChannel) return message.channel.send("I'm not in your voice channel.");   
-    
-    if (!guildIDData.dispatcher.paused) return message.channel.send("The music is not paused.")
-
-    guildIDData.dispatcher.resume();
-
-    message.channel.send("Successfully resumed the music.")
+exports.run = async (message) => { 
+    const serverQueue = message.client.queue.get(message.guild.id);
+    if (serverQueue && !serverQueue.playing) {
+        serverQueue.playing = true;
+        serverQueue.connection.dispatcher.resume();
+        return message.channel.send('▶ Resumed the music for you!');
+    }
+    return message.channel.send('There is nothing playing.');
 }
 
 exports.config = {

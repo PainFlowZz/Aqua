@@ -1,18 +1,13 @@
-exports.run = async (client, message, args, ops) => {
+exports.run = async (message, args) => {
     
-    var guildIDData = ops.active.get(message.guild.id);
-
-    if (!guildIDDate) return message.channel.send("There is no playing song.")
-
-    if (message.guild.me.voiceChannel !== message.member.voiceChannel) return message.channel.send("I'm not in your voice channel.");   
-    
-    if(isNaN(args[0]) || args[0] > 150 || args[0] < 0) return message.channel.send("Please provide a number between 0 and 150.");
-
-    if(!args[0]) message.channel.send(`Current volume: ${guildIDData.dispatcher.volume}`)
-
-    guildIDData.dispatcher.setVolume(args[0] / 100);
-
-    message.channel.send(`Successfully set the volume to ${args[0]}`);
+    const { voiceChannel } = message.member;
+    if (!voiceChannel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
+    const serverQueue = message.client.queue.get(message.guild.id);
+    if (!serverQueue) return message.channel.send('There is nothing playing.');
+    if (!args[0]) return message.channel.send(`The current volume is: **${serverQueue.volume}**`);
+    serverQueue.volume = args[0]; // eslint-disable-line
+    serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
+    return message.channel.send(`I set the volume to: **${args[0]}**`);
 } 
 
 exports.config = {

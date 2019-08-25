@@ -1,7 +1,14 @@
 const fs = require('fs');
 const Discord = require ("discord.js")
-const client = new Discord.Client();
-let active = new Map();
+const MusicClient = require('./struct/Client');
+const client = new MusicClient({ token: process.env.DISCORD_TOKEN });
+const { colour } = require ("./colours.json");
+const { rcolour } = require ("./colours.json");
+const YouTube = require('simple-youtube-api');
+const youtube = new YouTube("AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8");
+const queue = new Map();
+const ytdl = require('ytdl-core');
+const Util = require("discord.js");
 
 require('dotenv-flow').config();
 require('./utils/functions')(client);
@@ -21,28 +28,11 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-fs.readdir('./commands/', async (err, files, message) => {
-  if (err) return console.error;
-  console.log(`Loaded all Commands!`)
-   
-  let ops = {
-	active: active
-  }
-
-  let args = message.content.slice(prefix.length).trim().split(' ');
-
-  let cmd = args.shift().toLowerCase();
-
-  let commandFile = require(`./commands/${cmd}.js`);
-  commandFile.run(client, message, args, ops);
-
-  files.forEach(file => {
-    if (!file.endsWith('.js')) return;
-    let props = require(`./commands/${file}`);
-    let cmdName = file.split('.')[0];
-    client.commands.set(cmdName, props);
-  });
-});
+const commandFiles = readdirSync(join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
+for (const file of commandFiles) {
+	const command = require(join(__dirname, 'commands', `${file}`));
+	client.commands.set(command.name, command);
+}
 
 client.mongoose.init();
 client.login(process.env.CLIENT_TOKEN);

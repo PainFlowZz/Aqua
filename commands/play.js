@@ -1,88 +1,72 @@
+const { Util } = require('discord.js');
 const ytdl = require('ytdl-core');
+const ytdlDiscord = require('ytdl-core-discord');
  
-exports.run = async (client, message, args, ops) => {
+exports.run = async (message, args) => {
  
-    if (!message.member.voiceChannel) return message.channel.send("You're not in a voice channel.");
- 
-    if (!args[0]) return message.channel.send("Please provide a url/searchterm.");
- 
-    var validate = await ytdl.validateURL(args[0]);
- 
-    if (!validate) {
-        let commandFile = require(`./hjksdasdssd.js`);
-        return commandFile.run(client, message, args, ops);
+    const { voiceChannel } = message.member;
+    if (!voiceChannel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
+    if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
+
+    const serverQueue = message.client.queue.get(message.guild.id);
+    const songInfo = await ytdl.getInfo(args[0]);
+    const song = {
+        id: songInfo.video_id,
+        title: Util.escapeMarkdown(songInfo.title),
+        url: songInfo.video_url
+    };
+
+    if (serverQueue) {
+        serverQueue.songs.push(song);
+        console.log(serverQueue.songs);
+        return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
     }
- 
-    var info = await ytdl.getInfo(args[0]);
- 
-    var data = ops.active.get(message.guild.id) || {};
- 
-    if (!data.connection) data.connection = await message.member.voiceChannel.join();
 
-    if (!data.queue) data.queue = [];
+    const queueConstruct = {
+        textChannel: message.channel,
+        voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 2,
+        playing: true
+    };
+    message.client.queue.set(message.guild.id, queueConstruct);
+    queueConstruct.songs.push(song);
 
-    data.guildID = message.guild.id;
- 
-    data.queue.push({
-        songTitle: info.title,
-        requester: message.author.tag,
-        url: args[0],
-        announceChannel: message.channel.id
-    });
+    const play = async song => {
+        const queue = message.client.queue.get(message.guild.id);
+        if (!song) {
+            queue.voiceChannel.leave();
+            message.client.queue.delete(message.guild.id);
+            return;
+        }
 
-    if (!data.dispatcher) {
-        Play(client, ops, data);
-    } else {
- 
-        message.channel.send(`Now playing: ${info.title} | Requested by: ${message.author.tag}`);
- 
+        const dispatcher = queue.connection.playOpusStream(await ytdlDiscord(song.url), { passes: 3 })
+            .on('end', reason => {
+                if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+                else console.log(reason);
+                queue.songs.shift();
+                play(queue.songs[0]);
+            })
+            .on('error', error => console.error(error));
+        dispatcher.setVolumeLogarithmic(queue.volume / 5);
+        queue.textChannel.send(`🎶 Start playing: **${song.title}**`);
+    };
+
+    try {
+        const connection = await voiceChannel.join();
+        queueConstruct.connection = connection;
+        play(queueConstruct.songs[0]);
+    } catch (error) {
+        console.error(`I could not join the voice channel: ${error}`);
+        message.client.queue.delete(message.guild.id);
+        await voiceChannel.leave();
+        return message.channel.send(`I could not join the voice channel: ${error}`);
     }
- 
-    ops.active.set(message.guild.id, data);
- 
 }
- 
-async function Play(client, ops, data) {
- 
-    client.channels.get(data.queue[0].announceChannel).send(`Now playing: ${data.queue[0].songTitle} | Requested by: ${data.queue[0].requester}`);
- 
-    var options = { seek: 2, volume: 1, bitrate: 128000 };
- 
-    data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: "audioonly" }), options);
 
-    data.dispatcher.guildID = data.guildID;
- 
-    data.dispatcher.once('end', function () {
- 
-        Finish(client, ops, this);
- 
-    });
- 
-}
- 
-function Finish(client, ops, dispatcher) {
- 
-    var fetchedData = ops.active.get(dispatcher.guildID);
- 
-    fetchedData.queue.shift();
- 
-    if (fetchedData.queue.length > 0) {
- 
-        ops.active.set(dispatcher.guildID, fetchedData);
- 
-        Play(client, ops, fetchedData);
- 
-    } else {
- 
-        ops.active.delete(dispatcher.guildID);
- 
-        var voiceChannel = client.guilds.get(dispatcher.guildID).me.voiceChannel;
- 
-        if (voiceChannel) voiceChannel.leave();
- 
-    }
- 
-}
  
 exports.help = {
     name: "play",
