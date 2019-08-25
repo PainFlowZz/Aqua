@@ -21,7 +21,7 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-fs.readdir('./commands/', async (err, files) => {
+fs.readdir('./commands/', async (err, files, args) => {
   if (err) return console.error;
   console.log(`Loaded all Commands!`)
    
