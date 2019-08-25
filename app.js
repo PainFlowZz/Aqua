@@ -22,11 +22,12 @@ fs.readdir('./events/', (err, files) => {
 });
 
 client.on('message', (message, settings) => {
+	let prefix = settings.prefix;
 	let args = message.content.slice(prefix.length).trim().split(' ');
 	let cmd = args.shift().toLowerCase();
 
 	if(message.author.bot) return;
-	if(!message.content.startsWith(settings.prefix)) return;
+	if(!message.content.startsWith(prefix)) return;
 	
 	try {
 		let ops = {
