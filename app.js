@@ -21,7 +21,7 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-client.on('message', (message, settings) => {
+client.on('message', message => {
 	let settings;
     try {
         settings = await client.getGuild(member.guild);
