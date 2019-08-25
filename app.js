@@ -23,9 +23,9 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-const commandFiles = readdirSync(join("./commands/", 'commands')).filter(file => file.endsWith('.js'));
+const commandFiles = readdirSync(join("./commands/")).filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-	const command = require(join("./commands/", 'commands', `${file}`));
+	const command = require(join("./commands/", `${file}`));
 	client.commands.set(command.name, command);
 }
 
