@@ -1,7 +1,9 @@
 const fs = require('fs');
 const Discord = require ("discord.js")
 const client = new Discord.Client();
-const active = new Map();
+let ops = {
+	active: active
+}
 
 require('dotenv-flow').config();
 require('./utils/functions')(client);
@@ -21,34 +23,24 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-let settings;
-try {
-	settings = client.getGuild(message.guild);
-} catch (error) {
-	console.error(error);
-}
+fs.readdir('./commands/', async (err, files) => {
+  if (err) return console.error;
+  console.log(`Loaded all Commands!`)
+   
+  let ops = {
+	active: active
+  }
 
-client.on('message', async (message) => {
-	
-	let prefix = settings.prefix;
-	let args = message.content.slice(prefix.length).trim().split(' ');
-	let cmd = args.shift().toLowerCase();
+  let commandFile = require(`./commands/${cmd}.js`);
+  commandFile.run(client, message, args, ops);
 
-	if(message.author.bot) return;
-	if(!message.content.startsWith(prefix)) return;
-	
-	try {
-		let ops = {
-			active: active
-		}
-	
-		let commandFile = require(`./commands/${cmd}.js`);
-		commandFile.run(client, message, args, ops);
-	} catch (e) {
-		console.log(e);
-	}
-
-})
+  files.forEach(file => {
+    if (!file.endsWith('.js')) return;
+    let props = require(`./commands/${file}`);
+    let cmdName = file.split('.')[0];
+    client.commands.set(cmdName, props);
+  });
+});
 
 client.mongoose.init();
 client.login(process.env.CLIENT_TOKEN);
