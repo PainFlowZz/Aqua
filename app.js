@@ -21,15 +21,16 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-let settings;
-try {
-	settings = await client.getGuild(member.guild);
-} catch (error) {
-	console.error(error);
-}
 
 client.on('message', message => {
 	
+	let settings;
+	try {
+		settings = await client.getGuild(message.guild);
+	} catch (error) {
+		console.error(error);
+	}
+
 	let prefix = settings.prefix;
 	let args = message.content.slice(prefix.length).trim().split(' ');
 	let cmd = args.shift().toLowerCase();
