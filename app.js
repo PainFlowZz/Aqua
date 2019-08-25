@@ -21,13 +21,15 @@ fs.readdir('./events/', (err, files) => {
   });
 });
 
-fs.readdir('./commands/', async (err, files, args) => {
+fs.readdir('./commands/', async (err, files) => {
   if (err) return console.error;
   console.log(`Loaded all Commands!`)
    
   let ops = {
 	active: active
   }
+
+  let args = message.content.slice(prefix.length).trim().split(' ');
 
   let cmd = args.shift().toLowerCase();
 
