@@ -23,7 +23,7 @@ fs.readdir('./events/', (err, files) => {
 
 let settings;
 try {
-	settings = await client.getGuild(message.guild);
+	settings = client.getGuild(message.guild);
 } catch (error) {
 	console.error(error);
 }
