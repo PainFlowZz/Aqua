@@ -29,6 +29,8 @@ fs.readdir('./commands/', async (err, files) => {
 	active: active
   }
 
+  let cmd = args.shift().toLowerCase();
+
   let commandFile = require(`./commands/${cmd}.js`);
   commandFile.run(client, message, args, ops);
 
