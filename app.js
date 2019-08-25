@@ -1,9 +1,7 @@
 const fs = require('fs');
 const Discord = require ("discord.js")
 const client = new Discord.Client();
-let ops = {
-	active: active
-}
+let active = new Map();
 
 require('dotenv-flow').config();
 require('./utils/functions')(client);
