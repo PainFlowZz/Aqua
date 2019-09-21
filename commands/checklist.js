@@ -9,11 +9,15 @@ module.exports.run = async (bot, message, args, settings) => {
 
   const prefix = settings.prefix
 
+  if (!client.user.hasPermission("ADMINISTRATOR")) status1 = "❌"
+  if (client.user.hasPermission("ADMINISTRATOR")) stauts1 = "✔️"
+
+  if (settings.welc)
 
   const HelpEmbed = new Discord.RichEmbed()
   .setColor(colour)
   .setTitle(emoji + " **Checklist!**")
-  .addField('1 ➜ Setup Permissions', 'Please make sure that I have all Permissions so I can run every command.')
+  .addField('1 ➜ Setup Permissions', 'Please make sure that I have the Administrator Permission so I can run every command.' + "`" + status1+ "`")
   .addField('2 ➜ Setup Configuration', `Run ${settings.prefix}config to setup the Configuration.`)
   .addField('3 ➜ Make sure Everything works', 'Try some commands and see if I can run them. If you have any issues, join the Support Server [here](https://discord.gg/gjASDYh).')
 
