@@ -12,8 +12,6 @@ module.exports.run = async (bot, message, args, settings) => {
   if (!client.user.hasPermission("ADMINISTRATOR")) status1 = "❌"
   if (client.user.hasPermission("ADMINISTRATOR")) stauts1 = "✔️"
 
-  if (settings.welc)
-
   const HelpEmbed = new Discord.RichEmbed()
   .setColor(colour)
   .setTitle(emoji + " **Checklist!**")
