@@ -39,7 +39,6 @@ const queue = new Map();
 const ytdl = require('ytdl-core');
 const Util = require("discord.js");
 
-
 client.on('message', async (message, play) => {
 	let settings;
 	try {
