@@ -11,8 +11,8 @@ module.exports.run = async (client, message, args, settings) => {
 
   let status1 = undefined;
 
-  if (!client.user.hasPermission("ADMINISTRATOR")) status1 = "❌";
-  if (client.user.hasPermission("ADMINISTRATOR")) stauts1 = "✔️";
+  if (!client.guild.me.hasPermission("ADMINISTRATOR")) status1 = "❌";
+  if (client.guild.me.hasPermission("ADMINISTRATOR")) stauts1 = "✔️";
 
   const HelpEmbed = new Discord.RichEmbed()
   .setColor(colour)
