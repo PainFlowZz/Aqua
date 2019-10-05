@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const { colour } = require ("../colours.json");
 
-module.exports.run = async (bot, message, args, settings) => {
+module.exports.run = async (client, message, args, settings) => {
     
   if(!message.member.hasPermission("ADMINISTRATOR")) return
 
