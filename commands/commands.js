@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args, settings) => {
     .addField(`__**Moderation**__`, "`clear` `ban` `kick` `mute` `tempmute` `unban` `unmute`")
     .addField(`__**Music**__`, "`np` `pause` `play` `queue` `resume` `skip` `stop` `vol`")
     .addField(`__**Other**__`, "`avatar` `checklist` `config`")
-    .addField(`__**Utility**__`, "`info` `invites` `serverinfo` `weather`")
+    .addField(`__**Utility**__`, "`info` `invites` `serverinfo` `weather` `urban`")
 
     message.channel.send(HelpEmbed)
     
